@@ -115,6 +115,7 @@ export default function SEO({
   url,
   type = "website",
   schema,
+  breadcrumbs,
   noindex = false
 }) {
   const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} - ESIC Cashless Hospital in Sambhajinagar`;
@@ -127,6 +128,21 @@ export default function SEO({
   const schemas = [organizationSchema, localBusinessSchema];
   if (schema) {
     schemas.push(schema);
+  }
+  
+  // Add breadcrumb schema if provided
+  if (breadcrumbs && breadcrumbs.length > 0) {
+    const breadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": breadcrumbs.map((item, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": item.name,
+        "item": `${SITE_URL}${item.url}`
+      }))
+    };
+    schemas.push(breadcrumbSchema);
   }
 
   return (

@@ -17,6 +17,7 @@ import ContactPage from "@/pages/ContactPage";
 import ThankYouPage from "@/pages/ThankYouPage";
 import BlogPage from "@/pages/BlogPage";
 import BlogDetailPage from "@/pages/BlogDetailPage";
+import { WalujHospitalPage, ChikalthanaHospitalPage, MIDCHospitalPage } from "@/pages/LocationPage";
 
 // Admin Pages
 import AdminLogin from "@/pages/admin/AdminLogin";
@@ -45,6 +46,10 @@ function App() {
               <Route path="blog/:slug" element={<BlogDetailPage />} />
               <Route path="contact" element={<ContactPage />} />
               <Route path="thank-you" element={<ThankYouPage />} />
+              {/* Location Pages for Local SEO */}
+              <Route path="waluj-hospital" element={<WalujHospitalPage />} />
+              <Route path="chikalthana-hospital" element={<ChikalthanaHospitalPage />} />
+              <Route path="midc-hospital" element={<MIDCHospitalPage />} />
             </Route>
             {/* Admin Routes */}
             <Route path="/admin/login" element={<AdminLogin />} />

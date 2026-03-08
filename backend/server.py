@@ -780,19 +780,6 @@ async def delete_blog(slug: str):
         raise HTTPException(status_code=404, detail="Blog post not found")
     return {"message": "Blog post deleted successfully"}
 
-@api_router.get("/blog-categories")
-async def get_blog_categories():
-    return [
-        {"value": "general_health", "label": "General Health"},
-        {"value": "orthopedics", "label": "Orthopedics"},
-        {"value": "cardiology", "label": "Cardiology"},
-        {"value": "surgery", "label": "Surgery"},
-        {"value": "nutrition", "label": "Nutrition"},
-        {"value": "mental_health", "label": "Mental Health"},
-        {"value": "womens_health", "label": "Women's Health"},
-        {"value": "esic_info", "label": "ESIC Information"}
-    ]
-
 # Status endpoints (existing)
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
@@ -828,6 +815,10 @@ async def get_sitemap():
         {"url": "/services", "priority": "0.8", "changefreq": "monthly"},
         {"url": "/blog", "priority": "0.7", "changefreq": "daily"},
         {"url": "/contact", "priority": "0.6", "changefreq": "monthly"},
+        # Location pages for local SEO
+        {"url": "/waluj-hospital", "priority": "0.8", "changefreq": "monthly"},
+        {"url": "/chikalthana-hospital", "priority": "0.8", "changefreq": "monthly"},
+        {"url": "/midc-hospital", "priority": "0.8", "changefreq": "monthly"},
     ]
     
     # Generate sitemap XML
@@ -894,6 +885,9 @@ Allow: /doctors
 Allow: /services
 Allow: /blog
 Allow: /contact
+Allow: /waluj-hospital
+Allow: /chikalthana-hospital
+Allow: /midc-hospital
 """
     return Response(content=robots_content, media_type="text/plain")
 
