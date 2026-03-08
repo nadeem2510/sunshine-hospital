@@ -310,7 +310,7 @@ DOCTORS = [
         "qualification": "MBBS, MD (Medicine)",
         "experience": "15+ Years",
         "specializations": ["Internal Medicine", "Diabetes Management", "Hypertension", "Fever & Infections"],
-        "image": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop",
+        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/ffi1eteu_Dr%20Nadim%20Shaikh.png",
         "schedule": {
             "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             "timing": "10:00 AM - 6:00 PM"
@@ -325,7 +325,7 @@ DOCTORS = [
         "qualification": "MBBS, MS, DNB (Orthopedics)",
         "experience": "12+ Years",
         "specializations": ["Joint Replacement", "Spine Surgery", "Trauma Surgery", "Arthroscopy", "ACL Reconstruction"],
-        "image": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&h=400&fit=crop",
+        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/e558rx4q_Dr%20Gajanan%20Deshmukh.png",
         "schedule": {
             "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             "timing": "10:00 AM - 5:00 PM"
@@ -340,7 +340,7 @@ DOCTORS = [
         "qualification": "MBBS, MS (General Surgery)",
         "experience": "10+ Years",
         "specializations": ["Laparoscopic Surgery", "Cancer Surgery", "Hernia Repair", "Gallbladder Surgery", "Piles Surgery"],
-        "image": "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=400&h=400&fit=crop",
+        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/6gtcn8os_Dr%20Mubasheer%20Quazi.png",
         "schedule": {
             "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             "timing": "10:00 AM - 5:00 PM"
@@ -355,7 +355,7 @@ DOCTORS = [
         "qualification": "MBBS, MD, DNB (Cardiology)",
         "experience": "10+ Years",
         "specializations": ["Interventional Cardiology", "Angioplasty", "Heart Disease Management", "Cardiac Catheterization"],
-        "image": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop",
+        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/4t1c42vk_Dr%20Ajeya%20Ukadgaokar.png",
         "schedule": {
             "days": ["Monday", "Wednesday", "Friday", "Saturday"],
             "timing": "11:00 AM - 4:00 PM"
@@ -370,7 +370,7 @@ DOCTORS = [
         "qualification": "MD, DM (Nephrology)",
         "experience": "8+ Years",
         "specializations": ["Kidney Disease", "Dialysis", "Kidney Transplant Care", "Hypertension"],
-        "image": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop",
+        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/0cs6fo5g_Dr%20Rahul%20Ruikar.png",
         "schedule": {
             "days": ["Tuesday", "Thursday", "Saturday"],
             "timing": "11:00 AM - 3:00 PM"
@@ -415,7 +415,7 @@ DOCTORS = [
         "qualification": "MBBS, MD (Psychiatry)",
         "experience": "8+ Years",
         "specializations": ["Depression", "Anxiety", "Stress Management", "Addiction Treatment"],
-        "image": "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&h=400&fit=crop",
+        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/rxhaft4d_Dr%20Rachna%20Pole.png",
         "schedule": {
             "days": ["Monday", "Wednesday", "Friday"],
             "timing": "11:00 AM - 3:00 PM"
