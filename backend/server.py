@@ -576,8 +576,8 @@ async def create_appointment(input: AppointmentCreate):
     return appointment
 
 @api_router.get("/appointments", response_model=List[Appointment])
-async def get_appointments():
-    appointments = await db.appointments.find({}, {"_id": 0}).to_list(1000)
+async def get_appointments(limit: int = 100, skip: int = 0):
+    appointments = await db.appointments.find({}, {"_id": 0}).skip(skip).limit(limit).to_list(limit)
     for appt in appointments:
         if isinstance(appt['created_at'], str):
             appt['created_at'] = datetime.fromisoformat(appt['created_at'])
@@ -595,8 +595,8 @@ async def create_esic_inquiry(input: ESICInquiryCreate):
     return inquiry
 
 @api_router.get("/esic-inquiries", response_model=List[ESICInquiry])
-async def get_esic_inquiries():
-    inquiries = await db.esic_inquiries.find({}, {"_id": 0}).to_list(1000)
+async def get_esic_inquiries(limit: int = 100, skip: int = 0):
+    inquiries = await db.esic_inquiries.find({}, {"_id": 0}).skip(skip).limit(limit).to_list(limit)
     for inq in inquiries:
         if isinstance(inq['created_at'], str):
             inq['created_at'] = datetime.fromisoformat(inq['created_at'])
@@ -614,8 +614,9 @@ async def create_contact(input: ContactCreate):
 # Blog endpoints
 @api_router.get("/blogs")
 async def get_blogs(category: Optional[str] = None, published_only: bool = True):
-    # First check if we have blogs in DB
-    db_blogs = await db.blogs.find({}, {"_id": 0}).to_list(100)
+    # First check if we have blogs in DB - fetch only needed fields for listing
+    projection = {"_id": 0, "title": 1, "slug": 1, "excerpt": 1, "category": 1, "is_published": 1, "created_at": 1, "featured_image": 1, "author": 1, "tags": 1}
+    db_blogs = await db.blogs.find({}, projection).limit(100).to_list(100)
     
     if not db_blogs:
         # Return sample blogs if no DB blogs exist
@@ -721,8 +722,8 @@ async def create_status_check(input: StatusCheckCreate):
     return status_obj
 
 @api_router.get("/status", response_model=List[StatusCheck])
-async def get_status_checks():
-    status_checks = await db.status_checks.find({}, {"_id": 0}).to_list(1000)
+async def get_status_checks(limit: int = 50, skip: int = 0):
+    status_checks = await db.status_checks.find({}, {"_id": 0}).skip(skip).limit(limit).to_list(limit)
     for check in status_checks:
         if isinstance(check['timestamp'], str):
             check['timestamp'] = datetime.fromisoformat(check['timestamp'])
