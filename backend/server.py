@@ -680,6 +680,20 @@ async def create_contact(input: ContactCreate):
     return contact
 
 # Blog endpoints
+@api_router.get("/blog-categories")
+async def get_blog_categories():
+    """Return list of blog categories"""
+    return [
+        {"id": "general_health", "name": "General Health"},
+        {"id": "orthopedics", "name": "Orthopedics"},
+        {"id": "cardiology", "name": "Cardiology"},
+        {"id": "surgery", "name": "Surgery"},
+        {"id": "nutrition", "name": "Nutrition"},
+        {"id": "mental_health", "name": "Mental Health"},
+        {"id": "womens_health", "name": "Women's Health"},
+        {"id": "esic_info", "name": "ESIC Information"},
+    ]
+
 @api_router.get("/blogs")
 async def get_blogs(category: Optional[str] = None, published_only: bool = True):
     # First check if we have blogs in DB - fetch only needed fields for listing
