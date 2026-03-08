@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import SEO from "@/components/SEO";
 import axios from "axios";
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -82,6 +83,12 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Contact Us - Location, Phone, Appointment"
+        description="Contact Sunshine Hospital Sambhajinagar. Call 91305 61222 for appointments. Located at Satara Parisar, Beed Bypass Road. 24/7 emergency services. ESIC desk available."
+        keywords="contact hospital Sambhajinagar, hospital phone number Aurangabad, hospital address, book appointment, emergency contact, ESIC hospital contact"
+        url="/contact"
+      />
       {/* Hero Section */}
       <section className="bg-purple-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

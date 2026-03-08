@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import AppointmentModal from "@/components/AppointmentModal";
+import SEO, { generateFAQSchema } from "@/components/SEO";
 
 const eligibilityMJPJAY = [
   "Maharashtra domicile with valid documents",
@@ -91,6 +92,13 @@ export default function MJPJAYPage() {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="MJPJAY & PMJAY Cashless Treatment Hospital"
+        description="Sunshine Hospital is empanelled for MJPJAY (Mahatma Jyotiba Phule Jan Arogya Yojana) and PMJAY (Ayushman Bharat) schemes. Free cashless treatment for eligible families in Sambhajinagar."
+        keywords="MJPJAY hospital Sambhajinagar, PMJAY hospital Aurangabad, Ayushman Bharat hospital, free treatment hospital, government scheme hospital, cashless treatment PMJAY"
+        url="/mjpjay-pmjay"
+        schema={generateFAQSchema(faqs)}
+      />
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-green-50 to-emerald-100 py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

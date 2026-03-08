@@ -4,6 +4,7 @@ import { Award, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import AppointmentModal from "@/components/AppointmentModal";
+import SEO from "@/components/SEO";
 import axios from "axios";
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -30,6 +31,12 @@ export default function DoctorsPage() {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Expert Doctors & Specialists"
+        description="Meet our team of experienced doctors at Sunshine Hospital Sambhajinagar. Expert specialists in orthopedics, general medicine, surgery, ICU, and trauma care. Book appointment today."
+        keywords="doctors in Sambhajinagar, orthopedic doctor Aurangabad, best doctors hospital, specialist doctors, general physician, surgeon Aurangabad, ESIC doctors"
+        url="/doctors"
+      />
       {/* Hero Section */}
       <section className="bg-purple-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

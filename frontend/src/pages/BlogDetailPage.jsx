@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import AppointmentModal from "@/components/AppointmentModal";
+import SEO, { generateBlogSchema } from "@/components/SEO";
 import axios from "axios";
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -112,6 +113,15 @@ export default function BlogDetailPage() {
 
   return (
     <div className="min-h-screen bg-slate-50">
+      <SEO 
+        title={blog.title}
+        description={blog.excerpt}
+        keywords={blog.tags?.join(", ") || "health article, medical blog"}
+        image={blog.featured_image}
+        url={`/blog/${blog.slug}`}
+        type="article"
+        schema={generateBlogSchema(blog)}
+      />
       {/* Breadcrumb */}
       <div className="bg-white border-b border-slate-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">

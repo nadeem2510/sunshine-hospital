@@ -7,6 +7,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import AppointmentModal from "@/components/AppointmentModal";
+import SEO from "@/components/SEO";
 import axios from "axios";
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -41,6 +42,12 @@ export default function ServicesPage() {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Medical Services - ICU, Trauma, Surgery, Orthopedics"
+        description="Comprehensive medical services at Sunshine Hospital Sambhajinagar. ICU, trauma care, orthopedic surgery, general surgery, 24/7 emergency services. ESIC cashless treatment available."
+        keywords="hospital services Sambhajinagar, ICU Aurangabad, trauma center, orthopedic surgery, general surgery, emergency services, medical services"
+        url="/services"
+      />
       {/* Hero Section */}
       <section className="bg-purple-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

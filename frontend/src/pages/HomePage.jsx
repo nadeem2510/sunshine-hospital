@@ -8,6 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import AppointmentModal from "@/components/AppointmentModal";
+import SEO from "@/components/SEO";
 import axios from "axios";
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -69,6 +70,12 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Best Multispecialty Hospital in Sambhajinagar"
+        description="Sunshine Hospital is ESIC empaneled multispecialty hospital in Chhatrapati Sambhajinagar offering 24/7 emergency, ICU, trauma care, orthopedics. Cashless treatment for ESIC, MJPJAY, PMJAY patients near Waluj, Chikalthana."
+        keywords="Sunshine Hospital, ESIC hospital Sambhajinagar, cashless hospital Aurangabad, hospital near Waluj MIDC, emergency hospital, orthopedic hospital, trauma center Sambhajinagar, multispecialty hospital, MJPJAY hospital, PMJAY hospital Aurangabad"
+        url="/"
+      />
       {/* Hero Section */}
       <section className="hero-pattern bg-gradient-to-br from-slate-50 to-purple-50 py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

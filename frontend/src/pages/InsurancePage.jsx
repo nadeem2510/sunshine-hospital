@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import AppointmentModal from "@/components/AppointmentModal";
+import SEO from "@/components/SEO";
 
 const insurancePartners = [
   { name: "TATA AIG", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Tata_logo.svg/200px-Tata_logo.svg.png" },
@@ -105,6 +106,12 @@ export default function InsurancePage() {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Cashless Health Insurance - TPA & Private Insurance Partners"
+        description="Cashless hospitalization with major insurance companies at Sunshine Hospital. Partnered with TATA AIG, ICICI Lombard, SBI General, and leading TPAs. No upfront payment required."
+        keywords="cashless insurance hospital Sambhajinagar, health insurance hospital Aurangabad, TPA hospital, ICICI Lombard hospital, SBI insurance hospital, mediclaim cashless"
+        url="/cashless-insurance"
+      />
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-purple-50 to-indigo-100 py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

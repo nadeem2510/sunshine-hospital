@@ -797,6 +797,92 @@ async def get_status_checks(limit: int = 50, skip: int = 0):
             check['timestamp'] = datetime.fromisoformat(check['timestamp'])
     return status_checks
 
+# Sitemap endpoint
+@api_router.get("/sitemap.xml")
+async def get_sitemap():
+    from fastapi.responses import Response
+    
+    base_url = "https://www.sunshinehospital.org"
+    
+    # Static pages
+    static_pages = [
+        {"url": "/", "priority": "1.0", "changefreq": "weekly"},
+        {"url": "/esic-cashless-treatment-sambhajinagar", "priority": "0.9", "changefreq": "weekly"},
+        {"url": "/mjpjay-pmjay", "priority": "0.9", "changefreq": "weekly"},
+        {"url": "/cashless-insurance", "priority": "0.8", "changefreq": "monthly"},
+        {"url": "/doctors", "priority": "0.8", "changefreq": "weekly"},
+        {"url": "/services", "priority": "0.8", "changefreq": "monthly"},
+        {"url": "/blog", "priority": "0.7", "changefreq": "daily"},
+        {"url": "/contact", "priority": "0.6", "changefreq": "monthly"},
+    ]
+    
+    # Generate sitemap XML
+    sitemap_xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    sitemap_xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    
+    # Add static pages
+    for page in static_pages:
+        sitemap_xml += f'''  <url>
+    <loc>{base_url}{page["url"]}</loc>
+    <changefreq>{page["changefreq"]}</changefreq>
+    <priority>{page["priority"]}</priority>
+  </url>\n'''
+    
+    # Add doctor pages
+    for doctor in DOCTORS:
+        sitemap_xml += f'''  <url>
+    <loc>{base_url}/doctors/{doctor["id"]}</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>\n'''
+    
+    # Add service pages
+    for service in SERVICES:
+        sitemap_xml += f'''  <url>
+    <loc>{base_url}/services/{service["slug"]}</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>\n'''
+    
+    # Add blog posts
+    blogs = await db.blogs.find({"is_published": True}, {"_id": 0, "slug": 1}).to_list(100)
+    for blog in blogs:
+        sitemap_xml += f'''  <url>
+    <loc>{base_url}/blog/{blog["slug"]}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>\n'''
+    
+    sitemap_xml += '</urlset>'
+    
+    return Response(content=sitemap_xml, media_type="application/xml")
+
+# Robots.txt endpoint
+@api_router.get("/robots.txt")
+async def get_robots():
+    from fastapi.responses import Response
+    
+    robots_content = """User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.sunshinehospital.org/api/sitemap.xml
+
+# Disallow admin pages
+Disallow: /admin/
+Disallow: /api/auth/
+
+# Allow important pages
+Allow: /esic-cashless-treatment-sambhajinagar
+Allow: /mjpjay-pmjay
+Allow: /cashless-insurance
+Allow: /doctors
+Allow: /services
+Allow: /blog
+Allow: /contact
+"""
+    return Response(content=robots_content, media_type="text/plain")
+
 # Include the router in the main app
 app.include_router(api_router)
 

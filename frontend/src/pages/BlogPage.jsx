@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import SEO from "@/components/SEO";
 import axios from "axios";
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -83,6 +84,12 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Health Blog - Medical Tips & Wellness Articles"
+        description="Expert health articles, medical tips and wellness advice from Sunshine Hospital doctors. Read about ESIC benefits, orthopedics, surgery, and preventive healthcare."
+        keywords="health blog, medical articles, health tips Sambhajinagar, ESIC information, orthopedic care tips, wellness advice, hospital blog"
+        url="/blog"
+      />
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-purple-50 to-purple-100 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

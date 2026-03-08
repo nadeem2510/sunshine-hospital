@@ -13,6 +13,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import SEO, { generateFAQSchema } from "@/components/SEO";
 import axios from "axios";
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -126,6 +127,13 @@ export default function ESICPage() {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="ESIC Cashless Treatment Hospital in Sambhajinagar"
+        description="Sunshine Hospital is authorized ESIC empanelled hospital in Chhatrapati Sambhajinagar. Get 100% cashless treatment for Waluj, Chikalthana, MIDC workers. E-Pehchan card accepted. 24/7 emergency services."
+        keywords="ESIC hospital Sambhajinagar, ESIC cashless treatment Aurangabad, ESIC empanelled hospital, E-Pehchan card hospital, Waluj ESIC hospital, Chikalthana ESIC, MIDC hospital, cashless treatment for industrial workers"
+        url="/esic-cashless-treatment-sambhajinagar"
+        schema={generateFAQSchema(faqs)}
+      />
       {/* Hero Section */}
       <section className="bg-purple-50 py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

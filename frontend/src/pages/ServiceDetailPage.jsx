@@ -7,6 +7,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import AppointmentModal from "@/components/AppointmentModal";
+import SEO, { generateServiceSchema } from "@/components/SEO";
 import axios from "axios";
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -70,6 +71,14 @@ export default function ServiceDetailPage() {
 
   return (
     <div className="min-h-screen bg-slate-50">
+      <SEO 
+        title={`${service.name} - Medical Services`}
+        description={service.description}
+        keywords={`${service.name} Sambhajinagar, ${service.name} hospital Aurangabad, ${service.slug} treatment, medical services`}
+        image={service.image}
+        url={`/services/${service.slug}`}
+        schema={generateServiceSchema(service)}
+      />
       {/* Breadcrumb */}
       <div className="bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
