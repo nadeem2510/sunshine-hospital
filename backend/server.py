@@ -115,37 +115,312 @@ class Contact(BaseModel):
     message: str
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
-# Doctor Data
+# Blog Models
+class BlogCategory(str, Enum):
+    GENERAL_HEALTH = "general_health"
+    ORTHOPEDICS = "orthopedics"
+    CARDIOLOGY = "cardiology"
+    SURGERY = "surgery"
+    NUTRITION = "nutrition"
+    MENTAL_HEALTH = "mental_health"
+    WOMENS_HEALTH = "womens_health"
+    ESIC_INFO = "esic_info"
+
+class BlogPostCreate(BaseModel):
+    title: str = Field(..., min_length=5, max_length=200)
+    slug: str = Field(..., min_length=5, max_length=200)
+    excerpt: str = Field(..., min_length=20, max_length=500)
+    content: str = Field(..., min_length=100)
+    category: BlogCategory
+    author_id: str
+    featured_image: Optional[str] = None
+    tags: List[str] = []
+    is_published: bool = False
+
+class BlogPost(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    title: str
+    slug: str
+    excerpt: str
+    content: str
+    category: BlogCategory
+    author_id: str
+    author_name: Optional[str] = None
+    featured_image: Optional[str] = None
+    tags: List[str] = []
+    is_published: bool = False
+    views: int = 0
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class BlogPostUpdate(BaseModel):
+    title: Optional[str] = None
+    excerpt: Optional[str] = None
+    content: Optional[str] = None
+    category: Optional[BlogCategory] = None
+    featured_image: Optional[str] = None
+    tags: Optional[List[str]] = None
+    is_published: Optional[bool] = None
+
+# Sample Blog Posts Data
+SAMPLE_BLOGS = [
+    {
+        "id": "understanding-esic-benefits",
+        "title": "Understanding ESIC Benefits: A Complete Guide for Workers",
+        "slug": "understanding-esic-benefits",
+        "excerpt": "Learn about the comprehensive health benefits available to ESIC cardholders and their families. Know your rights and how to avail cashless treatment.",
+        "content": """<h2>What is ESIC?</h2>
+<p>The Employees' State Insurance Corporation (ESIC) is a social security organization that provides medical, cash, maternity, disability, and dependent benefits to insured employees and their dependents.</p>
+
+<h2>Who is Eligible?</h2>
+<p>Employees earning up to Rs. 21,000 per month working in factories and establishments with 10 or more employees are covered under ESIC. The scheme covers the employee and their dependents including spouse, children, and dependent parents.</p>
+
+<h2>Key Benefits</h2>
+<ul>
+<li><strong>Medical Benefits:</strong> Full medical care for the insured person and their family</li>
+<li><strong>Sickness Benefit:</strong> Cash compensation during certified sickness</li>
+<li><strong>Maternity Benefit:</strong> Paid leave during pregnancy and childbirth</li>
+<li><strong>Disablement Benefit:</strong> Monthly payments for employment injury</li>
+</ul>
+
+<h2>How to Avail Cashless Treatment at Sunshine Hospital</h2>
+<p>As an ESIC empanelled hospital, Sunshine Hospital provides seamless cashless treatment. Simply bring your E-Pehchan card and referral letter from the ESIC dispensary to our ESIC desk.</p>""",
+        "category": "esic_info",
+        "author_id": "dr-nadeem-shaikh",
+        "author_name": "Dr. Nadeem Shaikh",
+        "featured_image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=400&fit=crop",
+        "tags": ["ESIC", "Insurance", "Healthcare", "Workers Rights"],
+        "is_published": True,
+        "views": 245
+    },
+    {
+        "id": "knee-replacement-guide",
+        "title": "Total Knee Replacement: What You Need to Know",
+        "slug": "knee-replacement-guide",
+        "excerpt": "Everything about knee replacement surgery - from preparation to recovery. Learn when it's needed and what to expect during the procedure.",
+        "content": """<h2>When is Knee Replacement Needed?</h2>
+<p>Total Knee Replacement (TKR) is recommended when knee pain significantly affects your daily activities and conservative treatments like medication, physiotherapy, and injections no longer provide relief.</p>
+
+<h2>Common Conditions Requiring TKR</h2>
+<ul>
+<li>Severe osteoarthritis</li>
+<li>Rheumatoid arthritis</li>
+<li>Post-traumatic arthritis</li>
+<li>Severe knee injury</li>
+</ul>
+
+<h2>The Procedure</h2>
+<p>During TKR, the damaged cartilage and bone are replaced with metal and plastic components. The surgery typically takes 1-2 hours and is performed under spinal or general anesthesia.</p>
+
+<h2>Recovery Timeline</h2>
+<p>Most patients can walk with support within 24 hours after surgery. Full recovery takes 3-6 months with proper physiotherapy. At Sunshine Hospital, our orthopedic team ensures comprehensive post-operative care.</p>
+
+<h2>Why Choose Sunshine Hospital?</h2>
+<p>Dr. Gajanan Deshmukh, our consultant orthopedic surgeon, has performed numerous successful joint replacement surgeries with excellent outcomes.</p>""",
+        "category": "orthopedics",
+        "author_id": "dr-gajanan-deshmukh",
+        "author_name": "Dr. Gajanan Deshmukh",
+        "featured_image": "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800&h=400&fit=crop",
+        "tags": ["Orthopedics", "Knee Replacement", "Surgery", "Joint Pain"],
+        "is_published": True,
+        "views": 189
+    },
+    {
+        "id": "diabetes-management-tips",
+        "title": "Managing Diabetes: Daily Tips for Better Health",
+        "slug": "diabetes-management-tips",
+        "excerpt": "Practical advice for managing diabetes effectively through diet, exercise, and medication. Take control of your blood sugar levels.",
+        "content": """<h2>Understanding Diabetes</h2>
+<p>Diabetes is a chronic condition affecting how your body processes blood sugar. With proper management, you can lead a healthy, active life.</p>
+
+<h2>Daily Management Tips</h2>
+<h3>1. Monitor Blood Sugar Regularly</h3>
+<p>Keep track of your blood sugar levels as advised by your doctor. This helps you understand how food, activity, and medication affect your levels.</p>
+
+<h3>2. Follow a Balanced Diet</h3>
+<ul>
+<li>Choose complex carbohydrates over simple sugars</li>
+<li>Include plenty of vegetables and fiber</li>
+<li>Control portion sizes</li>
+<li>Avoid sugary drinks and processed foods</li>
+</ul>
+
+<h3>3. Stay Active</h3>
+<p>Regular physical activity helps control blood sugar. Aim for at least 30 minutes of moderate exercise most days of the week.</p>
+
+<h3>4. Take Medications as Prescribed</h3>
+<p>Never skip or change your diabetes medication without consulting your doctor.</p>
+
+<h2>When to Seek Medical Help</h2>
+<p>Visit your doctor immediately if you experience extremely high or low blood sugar, persistent symptoms, or any complications.</p>""",
+        "category": "general_health",
+        "author_id": "dr-nadeem-shaikh",
+        "author_name": "Dr. Nadeem Shaikh",
+        "featured_image": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&h=400&fit=crop",
+        "tags": ["Diabetes", "Health Tips", "Lifestyle", "Diet"],
+        "is_published": True,
+        "views": 312
+    },
+    {
+        "id": "laparoscopic-surgery-benefits",
+        "title": "Benefits of Laparoscopic Surgery: Minimally Invasive Approach",
+        "slug": "laparoscopic-surgery-benefits",
+        "excerpt": "Discover why laparoscopic surgery is preferred over traditional open surgery for many procedures. Smaller incisions, faster recovery.",
+        "content": """<h2>What is Laparoscopic Surgery?</h2>
+<p>Laparoscopic surgery, also known as minimally invasive surgery, uses small incisions and a camera (laparoscope) to perform surgical procedures. This approach has revolutionized modern surgery.</p>
+
+<h2>Advantages Over Open Surgery</h2>
+<ul>
+<li><strong>Smaller Incisions:</strong> 0.5-1 cm cuts instead of large incisions</li>
+<li><strong>Less Pain:</strong> Reduced post-operative discomfort</li>
+<li><strong>Faster Recovery:</strong> Return to normal activities sooner</li>
+<li><strong>Shorter Hospital Stay:</strong> Often discharged within 24-48 hours</li>
+<li><strong>Less Scarring:</strong> Minimal cosmetic impact</li>
+<li><strong>Lower Infection Risk:</strong> Reduced exposure of internal organs</li>
+</ul>
+
+<h2>Common Laparoscopic Procedures at Sunshine Hospital</h2>
+<ul>
+<li>Gallbladder removal (Cholecystectomy)</li>
+<li>Appendix removal (Appendectomy)</li>
+<li>Hernia repair</li>
+<li>Gynecological surgeries</li>
+</ul>
+
+<h2>Is Laparoscopic Surgery Right for You?</h2>
+<p>Dr. Mubasheer Qazi, our consultant laparoscopic surgeon, can evaluate your condition and recommend the best surgical approach for your needs.</p>""",
+        "category": "surgery",
+        "author_id": "dr-mubasheer-qazi",
+        "author_name": "Dr. Mubasheer Qazi",
+        "featured_image": "https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=800&h=400&fit=crop",
+        "tags": ["Surgery", "Laparoscopy", "Minimally Invasive", "Recovery"],
+        "is_published": True,
+        "views": 156
+    }
+]
+
+# Doctor Data - Real doctors from Sunshine Hospital
 DOCTORS = [
     {
-        "id": "dr-nadim-sheikh",
-        "name": "Dr. Nadim Sheikh",
+        "id": "dr-nadeem-shaikh",
+        "name": "Dr. Nadeem Shaikh",
         "title": "Director & Consulting Physician",
         "department": "General Medicine",
         "qualification": "MBBS, MD (Medicine)",
         "experience": "15+ Years",
-        "specializations": ["Internal Medicine", "Diabetes Management", "Hypertension", "General Health"],
+        "specializations": ["Internal Medicine", "Diabetes Management", "Hypertension", "Fever & Infections"],
         "image": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop",
         "schedule": {
             "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             "timing": "10:00 AM - 6:00 PM"
         },
-        "about": "Dr. Nadim Sheikh is the founder and Director of Sunshine Hospital. With over 15 years of experience in internal medicine, he is dedicated to providing quality healthcare to the community of Chhatrapati Sambhajinagar."
+        "about": "Dr. Nadeem Shaikh is the founder and Director of Sunshine Hospital. With extensive experience in internal medicine, he leads the hospital's mission to provide quality healthcare to the community of Chhatrapati Sambhajinagar."
     },
     {
-        "id": "dr-mangesh-rajput",
-        "name": "Dr. Mangesh Rajput",
+        "id": "dr-gajanan-deshmukh",
+        "name": "Dr. Gajanan Deshmukh",
         "title": "Consultant Orthopedic Surgeon",
         "department": "Orthopedics",
-        "qualification": "MBBS, MS (Ortho), Fellowship in Joint Replacement",
+        "qualification": "MBBS, MS, DNB (Orthopedics)",
         "experience": "12+ Years",
-        "specializations": ["Joint Replacement", "Trauma Surgery", "Sports Injuries", "Arthroscopy"],
+        "specializations": ["Joint Replacement", "Spine Surgery", "Trauma Surgery", "Arthroscopy", "ACL Reconstruction"],
         "image": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&h=400&fit=crop",
         "schedule": {
-            "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            "timing": "11:00 AM - 5:00 PM"
+            "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "timing": "10:00 AM - 5:00 PM"
         },
-        "about": "Dr. Mangesh Rajput is a highly skilled orthopedic surgeon specializing in joint replacement and trauma surgery. He has performed over 1000+ successful surgeries and is known for his expertise in minimally invasive techniques."
+        "about": "Dr. Gajanan Deshmukh is a highly skilled orthopedic surgeon specializing in joint replacement, spine surgery, and trauma care. He has performed numerous successful surgeries including Total Knee Replacement, Total Hip Replacement, and ACL surgeries."
+    },
+    {
+        "id": "dr-mubasheer-qazi",
+        "name": "Dr. Mubasheer Qazi",
+        "title": "Consultant General & Laparoscopic Surgeon",
+        "department": "General Surgery",
+        "qualification": "MBBS, MS (General Surgery)",
+        "experience": "10+ Years",
+        "specializations": ["Laparoscopic Surgery", "Cancer Surgery", "Hernia Repair", "Gallbladder Surgery", "Piles Surgery"],
+        "image": "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=400&h=400&fit=crop",
+        "schedule": {
+            "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "timing": "10:00 AM - 5:00 PM"
+        },
+        "about": "Dr. Mubasheer Qazi is an experienced general and laparoscopic surgeon specializing in minimally invasive procedures. He performs various surgeries including appendectomy, hernia repair, gallbladder removal, and cancer surgeries."
+    },
+    {
+        "id": "dr-ajeya-ukadgaonkar",
+        "name": "Dr. Ajeya Ukadgaonkar",
+        "title": "Interventional Cardiologist",
+        "department": "Cardiology",
+        "qualification": "MBBS, MD, DNB (Cardiology)",
+        "experience": "10+ Years",
+        "specializations": ["Interventional Cardiology", "Angioplasty", "Heart Disease Management", "Cardiac Catheterization"],
+        "image": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop",
+        "schedule": {
+            "days": ["Monday", "Wednesday", "Friday", "Saturday"],
+            "timing": "11:00 AM - 4:00 PM"
+        },
+        "about": "Dr. Ajeya Ukadgaonkar is an interventional cardiologist with expertise in diagnosing and treating heart conditions. He specializes in angioplasty, stenting, and other cardiac interventions."
+    },
+    {
+        "id": "dr-rahul-ruikar",
+        "name": "Dr. Rahul Ruikar",
+        "title": "Consultant Nephrologist",
+        "department": "Nephrology",
+        "qualification": "MD, DM (Nephrology)",
+        "experience": "8+ Years",
+        "specializations": ["Kidney Disease", "Dialysis", "Kidney Transplant Care", "Hypertension"],
+        "image": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop",
+        "schedule": {
+            "days": ["Tuesday", "Thursday", "Saturday"],
+            "timing": "11:00 AM - 3:00 PM"
+        },
+        "about": "Dr. Rahul Ruikar is a skilled nephrologist specializing in kidney disorders, dialysis management, and comprehensive care for patients with renal conditions."
+    },
+    {
+        "id": "dr-aakash-gore",
+        "name": "Dr. Aakash Gore",
+        "title": "Consultant Chest Physician & Pulmonologist",
+        "department": "Pulmonology",
+        "qualification": "MBBS, MD (Pulmonary Medicine)",
+        "experience": "8+ Years",
+        "specializations": ["Respiratory Diseases", "Asthma", "COPD", "Sleep Disorders", "Lung Infections"],
+        "image": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&h=400&fit=crop",
+        "schedule": {
+            "days": ["Monday", "Wednesday", "Friday"],
+            "timing": "10:00 AM - 2:00 PM"
+        },
+        "about": "Dr. Aakash Gore is a pulmonologist and chest physician with expertise in treating respiratory conditions including asthma, COPD, pneumonia, and other lung diseases."
+    },
+    {
+        "id": "dr-saleha-kausar",
+        "name": "Dr. Saleha Kausar",
+        "title": "Consultant Gynecologist",
+        "department": "Gynecology",
+        "qualification": "MBBS, MS (Obstetrics & Gynecology)",
+        "experience": "10+ Years",
+        "specializations": ["Obstetrics", "Gynecological Surgery", "High-Risk Pregnancy", "Infertility"],
+        "image": "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&h=400&fit=crop",
+        "schedule": {
+            "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "timing": "10:00 AM - 5:00 PM"
+        },
+        "about": "Dr. Saleha Kausar is an experienced gynecologist providing comprehensive women's healthcare including prenatal care, delivery, and gynecological surgeries."
+    },
+    {
+        "id": "dr-rachna-pole",
+        "name": "Dr. Rachna Pole",
+        "title": "Consultant Psychiatrist",
+        "department": "Psychiatry",
+        "qualification": "MBBS, MD (Psychiatry)",
+        "experience": "8+ Years",
+        "specializations": ["Depression", "Anxiety", "Stress Management", "Addiction Treatment"],
+        "image": "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&h=400&fit=crop",
+        "schedule": {
+            "days": ["Monday", "Wednesday", "Friday"],
+            "timing": "11:00 AM - 3:00 PM"
+        },
+        "about": "Dr. Rachna Pole is a psychiatrist specializing in mental health care including treatment of depression, anxiety, stress-related disorders, and addiction."
     }
 ]
 
@@ -335,6 +610,105 @@ async def create_contact(input: ContactCreate):
     doc['created_at'] = doc['created_at'].isoformat()
     await db.contacts.insert_one(doc)
     return contact
+
+# Blog endpoints
+@api_router.get("/blogs")
+async def get_blogs(category: Optional[str] = None, published_only: bool = True):
+    # First check if we have blogs in DB
+    db_blogs = await db.blogs.find({}, {"_id": 0}).to_list(100)
+    
+    if not db_blogs:
+        # Return sample blogs if no DB blogs exist
+        blogs = SAMPLE_BLOGS.copy()
+    else:
+        blogs = db_blogs
+    
+    # Filter by category if provided
+    if category:
+        blogs = [b for b in blogs if b.get("category") == category]
+    
+    # Filter by published status
+    if published_only:
+        blogs = [b for b in blogs if b.get("is_published", False)]
+    
+    # Sort by created_at (newest first)
+    blogs.sort(key=lambda x: x.get("created_at", ""), reverse=True)
+    
+    return blogs
+
+@api_router.get("/blogs/{slug}")
+async def get_blog(slug: str):
+    # Check DB first
+    blog = await db.blogs.find_one({"slug": slug}, {"_id": 0})
+    
+    if not blog:
+        # Check sample blogs
+        for b in SAMPLE_BLOGS:
+            if b["slug"] == slug:
+                return b
+        raise HTTPException(status_code=404, detail="Blog post not found")
+    
+    # Increment views
+    await db.blogs.update_one({"slug": slug}, {"$inc": {"views": 1}})
+    blog["views"] = blog.get("views", 0) + 1
+    
+    return blog
+
+@api_router.post("/blogs", response_model=BlogPost)
+async def create_blog(input: BlogPostCreate):
+    # Check if slug already exists
+    existing = await db.blogs.find_one({"slug": input.slug})
+    if existing:
+        raise HTTPException(status_code=400, detail="Blog with this slug already exists")
+    
+    # Get author name
+    author_name = None
+    for doc in DOCTORS:
+        if doc["id"] == input.author_id:
+            author_name = doc["name"]
+            break
+    
+    blog = BlogPost(**input.model_dump(), author_name=author_name)
+    doc = blog.model_dump()
+    doc['created_at'] = doc['created_at'].isoformat()
+    doc['updated_at'] = doc['updated_at'].isoformat()
+    
+    await db.blogs.insert_one(doc)
+    return blog
+
+@api_router.put("/blogs/{slug}")
+async def update_blog(slug: str, input: BlogPostUpdate):
+    existing = await db.blogs.find_one({"slug": slug}, {"_id": 0})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Blog post not found")
+    
+    update_data = {k: v for k, v in input.model_dump().items() if v is not None}
+    update_data["updated_at"] = datetime.now(timezone.utc).isoformat()
+    
+    await db.blogs.update_one({"slug": slug}, {"$set": update_data})
+    
+    updated = await db.blogs.find_one({"slug": slug}, {"_id": 0})
+    return updated
+
+@api_router.delete("/blogs/{slug}")
+async def delete_blog(slug: str):
+    result = await db.blogs.delete_one({"slug": slug})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Blog post not found")
+    return {"message": "Blog post deleted successfully"}
+
+@api_router.get("/blog-categories")
+async def get_blog_categories():
+    return [
+        {"value": "general_health", "label": "General Health"},
+        {"value": "orthopedics", "label": "Orthopedics"},
+        {"value": "cardiology", "label": "Cardiology"},
+        {"value": "surgery", "label": "Surgery"},
+        {"value": "nutrition", "label": "Nutrition"},
+        {"value": "mental_health", "label": "Mental Health"},
+        {"value": "womens_health", "label": "Women's Health"},
+        {"value": "esic_info", "label": "ESIC Information"}
+    ]
 
 # Status endpoints (existing)
 @api_router.post("/status", response_model=StatusCheck)

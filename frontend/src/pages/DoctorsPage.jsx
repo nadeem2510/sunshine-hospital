@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Clock, Award, ArrowRight } from "lucide-react";
+import { Award, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import AppointmentModal from "@/components/AppointmentModal";
@@ -49,100 +49,83 @@ export default function DoctorsPage() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {loading ? (
-            <div className="grid md:grid-cols-2 gap-8">
-              {[1, 2].map((i) => (
-                <div key={i} className="bg-slate-100 rounded-2xl h-[500px] animate-pulse" />
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="bg-slate-100 rounded-2xl h-[400px] animate-pulse" />
               ))}
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {doctors.map((doctor) => (
                 <Card 
                   key={doctor.id}
                   className="doctor-card group bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300"
                   data-testid={`doctor-page-card-${doctor.id}`}
                 >
-                  <div className="grid md:grid-cols-5">
-                    {/* Image */}
-                    <div className="md:col-span-2 relative overflow-hidden">
-                      <img
-                        src={doctor.image}
-                        alt={doctor.name}
-                        className="w-full h-64 md:h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-purple-900/80 to-transparent p-4 md:hidden">
-                        <span className="text-amber-400 font-semibold">
-                          {doctor.department}
+                  {/* Image */}
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={doctor.image}
+                      alt={doctor.name}
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-purple-900/80 to-transparent p-3">
+                      <span className="text-amber-400 font-semibold text-sm">
+                        {doctor.department}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* Content */}
+                  <CardContent className="p-5">
+                    <h2 className="text-lg font-bold text-slate-900 mb-1 group-hover:text-purple-700 transition-colors">
+                      {doctor.name}
+                    </h2>
+                    <p className="text-purple-700 font-medium text-sm mb-2">
+                      {doctor.title}
+                    </p>
+                    
+                    <p className="text-slate-600 text-xs mb-3">
+                      {doctor.qualification}
+                    </p>
+                    
+                    <div className="flex flex-wrap gap-1.5 mb-3">
+                      {doctor.specializations.slice(0, 2).map((spec, index) => (
+                        <span 
+                          key={index}
+                          className="bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full text-xs font-medium"
+                        >
+                          {spec}
                         </span>
-                      </div>
+                      ))}
                     </div>
                     
-                    {/* Content */}
-                    <CardContent className="md:col-span-3 p-6 md:p-8 flex flex-col">
-                      <div className="hidden md:block mb-2">
-                        <span className="text-amber-500 font-semibold text-sm">
-                          {doctor.department}
-                        </span>
-                      </div>
-                      
-                      <h2 className="text-2xl font-bold text-slate-900 mb-1 group-hover:text-purple-700 transition-colors">
-                        {doctor.name}
-                      </h2>
-                      <p className="text-purple-700 font-medium mb-4">
-                        {doctor.title}
-                      </p>
-                      
-                      <p className="text-slate-600 text-sm mb-4">
-                        {doctor.qualification}
-                      </p>
-                      
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {doctor.specializations.slice(0, 3).map((spec, index) => (
-                          <span 
-                            key={index}
-                            className="bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-xs font-medium"
-                          >
-                            {spec}
-                          </span>
-                        ))}
-                      </div>
-                      
-                      <div className="flex items-center gap-4 text-sm text-slate-600 mb-6">
-                        <span className="flex items-center gap-1">
-                          <Award className="w-4 h-4 text-amber-500" />
-                          {doctor.experience}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Clock className="w-4 h-4 text-amber-500" />
-                          {doctor.schedule.timing}
-                        </span>
-                      </div>
-                      
-                      <p className="text-slate-600 text-sm mb-6 line-clamp-3">
-                        {doctor.about}
-                      </p>
-                      
-                      <div className="mt-auto flex gap-3">
-                        <Link to={`/doctors/${doctor.id}`} className="flex-1">
-                          <Button
-                            variant="outline"
-                            className="w-full border-purple-700 text-purple-700 hover:bg-purple-700 hover:text-white rounded-full"
-                            data-testid={`view-profile-${doctor.id}`}
-                          >
-                            View Profile
-                            <ArrowRight className="w-4 h-4 ml-2" />
-                          </Button>
-                        </Link>
+                    <div className="flex items-center gap-3 text-xs text-slate-500 mb-4">
+                      <span className="flex items-center gap-1">
+                        <Award className="w-3 h-3 text-amber-500" />
+                        {doctor.experience}
+                      </span>
+                    </div>
+                    
+                    <div className="flex gap-2">
+                      <Link to={`/doctors/${doctor.id}`} className="flex-1">
                         <Button
-                          onClick={() => setShowAppointment(true)}
-                          className="flex-1 bg-amber-500 hover:bg-amber-600 text-white rounded-full"
-                          data-testid={`book-with-${doctor.id}`}
+                          variant="outline"
+                          className="w-full text-xs border-purple-700 text-purple-700 hover:bg-purple-700 hover:text-white rounded-full py-2"
+                          data-testid={`view-profile-${doctor.id}`}
                         >
-                          Book Appointment
+                          View Profile
                         </Button>
-                      </div>
-                    </CardContent>
-                  </div>
+                      </Link>
+                      <Button
+                        onClick={() => setShowAppointment(true)}
+                        className="flex-1 text-xs bg-amber-500 hover:bg-amber-600 text-white rounded-full py-2"
+                        data-testid={`book-with-${doctor.id}`}
+                      >
+                        Book
+                      </Button>
+                    </div>
+                  </CardContent>
                 </Card>
               ))}
             </div>

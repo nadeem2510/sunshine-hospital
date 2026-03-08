@@ -11,6 +11,8 @@ import ServicesPage from "@/pages/ServicesPage";
 import ServiceDetailPage from "@/pages/ServiceDetailPage";
 import ContactPage from "@/pages/ContactPage";
 import ThankYouPage from "@/pages/ThankYouPage";
+import BlogPage from "@/pages/BlogPage";
+import BlogDetailPage from "@/pages/BlogDetailPage";
 
 // Layout
 import Layout from "@/components/Layout";
@@ -27,6 +29,8 @@ function App() {
             <Route path="doctors/:doctorId" element={<DoctorProfilePage />} />
             <Route path="services" element={<ServicesPage />} />
             <Route path="services/:serviceSlug" element={<ServiceDetailPage />} />
+            <Route path="blog" element={<BlogPage />} />
+            <Route path="blog/:slug" element={<BlogDetailPage />} />
             <Route path="contact" element={<ContactPage />} />
             <Route path="thank-you" element={<ThankYouPage />} />
           </Route>

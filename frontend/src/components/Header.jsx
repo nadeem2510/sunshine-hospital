@@ -12,6 +12,7 @@ const navLinks = [
   { href: "/esic-cashless-treatment-sambhajinagar", label: "ESIC Cashless" },
   { href: "/services", label: "Services" },
   { href: "/doctors", label: "Doctors" },
+  { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ];
 

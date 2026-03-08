@@ -33,6 +33,7 @@ export default function Footer() {
                 { href: "/esic-cashless-treatment-sambhajinagar", label: "ESIC Cashless" },
                 { href: "/services", label: "Our Services" },
                 { href: "/doctors", label: "Our Doctors" },
+                { href: "/blog", label: "Health Blog" },
                 { href: "/contact", label: "Contact Us" },
               ].map((link) => (
                 <li key={link.href}>

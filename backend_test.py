@@ -180,6 +180,59 @@ class SunshineHospitalAPITester:
         if success:
             print(f"   Contact ID: {response.get('id', 'N/A')}")
 
+    def test_blog_api(self):
+        """Test blog API endpoints"""
+        print("\n" + "="*50)
+        print("TESTING BLOG API")
+        print("="*50)
+        
+        # Get all blogs
+        success, blogs_data = self.run_test("Get All Blogs", "GET", "api/blogs", 200)
+        
+        if success and blogs_data:
+            print(f"   Found {len(blogs_data)} blogs")
+            
+            # Test individual blog endpoints using slugs
+            test_slugs = ["understanding-esic-benefits", "knee-replacement-guide", "diabetes-management-tips", "laparoscopic-surgery-benefits"]
+            
+            for slug in test_slugs:
+                # Find the blog in the response to verify it exists
+                blog_found = any(blog.get('slug') == slug for blog in blogs_data)
+                if blog_found:
+                    self.run_test(f"Get Blog '{slug}'", "GET", f"api/blogs/{slug}", 200)
+                else:
+                    print(f"   ⚠️  Blog '{slug}' not found in blog list")
+            
+            # Test non-existent blog
+            self.run_test("Get Non-existent Blog", "GET", "api/blogs/non-existent-slug", 404)
+        else:
+            print("   ⚠️  No blogs returned or API failed")
+        
+        # Test blog categories
+        success, categories_data = self.run_test("Get Blog Categories", "GET", "api/blog-categories", 200)
+        
+        if success and categories_data:
+            print(f"   Found {len(categories_data)} blog categories")
+            # Verify category structure
+            if categories_data and isinstance(categories_data, list):
+                first_cat = categories_data[0]
+                if 'value' in first_cat and 'label' in first_cat:
+                    print(f"   ✅ Categories have correct structure")
+                else:
+                    print(f"   ⚠️  Categories missing value/label fields")
+        
+        # Test blog filtering by category
+        if success and categories_data:
+            test_category = "esic_info"  # Test ESIC category
+            success_filter, filtered_blogs = self.run_test(
+                f"Get Blogs by Category '{test_category}'", 
+                "GET", 
+                f"api/blogs?category={test_category}", 
+                200
+            )
+            if success_filter and filtered_blogs:
+                print(f"   Found {len(filtered_blogs)} blogs in '{test_category}' category")
+
     def test_data_validation(self):
         """Test API validation with invalid data"""
         print("\n" + "="*50)
@@ -211,6 +264,7 @@ class SunshineHospitalAPITester:
         self.test_health_endpoints()
         self.test_doctors_api() 
         self.test_services_api()
+        self.test_blog_api()  # Added blog API tests
         self.test_appointments_api()
         self.test_esic_inquiry_api()
         self.test_contact_api()
