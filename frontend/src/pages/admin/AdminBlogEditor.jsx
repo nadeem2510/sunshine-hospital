@@ -264,8 +264,8 @@ export default function AdminBlogEditor() {
                 <CardHeader className="pb-3"><CardTitle className="text-lg flex items-center gap-2"><Tag className="w-4 h-4" />Tags</CardTitle></CardHeader>
                 <CardContent>
                   <div className="flex gap-2 mb-3">
-                    <Input placeholder="Add tag" value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())} data-testid="tag-input" />
-                    <Button type="button" variant="outline" onClick={addTag}>Add</Button>
+                    <Input placeholder="Add tag" value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addTag(); }}} data-testid="tag-input" />
+                    <Button type="button" variant="outline" onClick={() => addTag()} data-testid="add-tag-btn">Add</Button>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {formData.tags.map((tag, i) => (<Badge key={i} variant="secondary" className="cursor-pointer hover:bg-red-100 hover:text-red-800" onClick={() => removeTag(tag)}>{tag} ×</Badge>))}

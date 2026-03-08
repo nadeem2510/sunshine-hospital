@@ -46,6 +46,21 @@ Build a professional, high-performance multi-page medical website for "Sunshine 
 - [x] Dr. Saleha Kausar - Gynecologist
 - [x] Dr. Rachna Pole - Psychiatrist
 
+### March 8, 2025 - Blog Admin Panel
+- [x] Admin blog list at /admin/blog with stats (total articles, published, drafts, views)
+- [x] Search functionality for filtering articles
+- [x] Actions dropdown (Edit, View, Publish/Unpublish, Delete)
+- [x] New article editor at /admin/blog/new
+- [x] Edit article editor at /admin/blog/edit/:slug
+- [x] Auto-generate URL slug from title
+- [x] Category dropdown (8 categories)
+- [x] Author dropdown (8 doctors)
+- [x] Featured image URL with preview
+- [x] Tags management (add/remove)
+- [x] Publish/Draft toggle
+- [x] HTML content support for rich formatting
+- [x] Delete confirmation dialog
+
 ## Technical Stack
 - Backend: FastAPI + MongoDB
 - Frontend: React + Tailwind CSS + Shadcn UI
