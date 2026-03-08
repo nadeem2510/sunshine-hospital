@@ -385,7 +385,7 @@ DOCTORS = [
         "qualification": "MBBS, MD (Pulmonary Medicine)",
         "experience": "8+ Years",
         "specializations": ["Respiratory Diseases", "Asthma", "COPD", "Sleep Disorders", "Lung Infections"],
-        "image": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&h=400&fit=crop",
+        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/bzzoxaga_DR%20AAKASH%20GORE.jpeg",
         "schedule": {
             "days": ["Monday", "Wednesday", "Friday"],
             "timing": "10:00 AM - 2:00 PM"
@@ -400,7 +400,7 @@ DOCTORS = [
         "qualification": "MBBS, MS (Obstetrics & Gynecology)",
         "experience": "10+ Years",
         "specializations": ["Obstetrics", "Gynecological Surgery", "High-Risk Pregnancy", "Infertility"],
-        "image": "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&h=400&fit=crop",
+        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/n6y9kh4g_Dr%20Saleha%20Kausar.png",
         "schedule": {
             "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             "timing": "10:00 AM - 5:00 PM"
