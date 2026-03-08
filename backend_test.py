@@ -9,10 +9,11 @@ class SunshineHospitalAPITester:
         self.tests_run = 0
         self.tests_passed = 0
         self.failures = []
+        self.created_blog_slug = None
 
     def run_test(self, name, method, endpoint, expected_status, data=None, headers=None):
         """Run a single API test"""
-        url = f"{self.base_url}/{endpoint}"
+        url = f"{self.base_url}/{endpoint}" if not endpoint.startswith('http') else endpoint
         if headers is None:
             headers = {'Content-Type': 'application/json'}
 
@@ -24,6 +25,10 @@ class SunshineHospitalAPITester:
                 response = requests.get(url, headers=headers, timeout=10)
             elif method == 'POST':
                 response = requests.post(url, json=data, headers=headers, timeout=10)
+            elif method == 'PUT':
+                response = requests.put(url, json=data, headers=headers, timeout=10)
+            elif method == 'DELETE':
+                response = requests.delete(url, headers=headers, timeout=10)
             
             success = response.status_code == expected_status
             if success:
@@ -253,6 +258,84 @@ class SunshineHospitalAPITester:
             "phone": ""  # Empty phone
         }
         self.run_test("Invalid ESIC Data", "POST", "api/esic-inquiry", 422, invalid_esic)
+
+    def test_blog_api(self):
+        """Test blog admin panel APIs"""
+        print("\n📝 BLOG ADMIN PANEL API TESTS")
+        print("-" * 40)
+        
+        # Test blog categories endpoint
+        success, categories = self.run_test("Get Blog Categories", "GET", "api/blog-categories", 200)
+        if success:
+            print(f"   📋 Found {len(categories)} categories")
+        
+        # Test getting all blogs (including drafts)
+        success, all_blogs = self.run_test("Get All Blogs", "GET", "api/blogs?published_only=false", 200)
+        if success:
+            published_count = len([b for b in all_blogs if b.get('is_published', False)])
+            draft_count = len(all_blogs) - published_count
+            total_views = sum(b.get('views', 0) for b in all_blogs)
+            print(f"   📊 Stats - Total: {len(all_blogs)}, Published: {published_count}, Drafts: {draft_count}")
+            print(f"   👀 Total Views: {total_views}")
+        
+        # Test getting published blogs only
+        success, published_blogs = self.run_test("Get Published Blogs", "GET", "api/blogs?published_only=true", 200)
+        if success:
+            print(f"   📰 Published articles: {len(published_blogs)}")
+        
+        # Test creating a new blog post
+        test_slug = f"test-blog-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+        blog_data = {
+            "title": "Test Blog Post for Admin Panel",
+            "slug": test_slug,
+            "excerpt": "This is a test blog post created by the testing system to verify the blog creation functionality works correctly.",
+            "content": "<h2>Test Content</h2><p>This is test content for the blog post. It contains enough characters to meet the minimum requirement of 100 characters for blog content validation.</p><p>The blog admin panel should be able to create, read, update and delete this post.</p>",
+            "category": "general_health",
+            "author_id": "dr-nadeem-shaikh",
+            "featured_image": "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800&h=400&fit=crop",
+            "tags": ["Test", "Admin Panel", "API Testing"],
+            "is_published": False
+        }
+        
+        success, created_blog = self.run_test("Create Blog Post", "POST", "api/blogs", 201, blog_data)
+        if success:
+            self.created_blog_slug = test_slug
+            print(f"   🎯 Created blog with slug: {test_slug}")
+        
+        # Test getting specific blog
+        if self.created_blog_slug:
+            success, blog_detail = self.run_test("Get Specific Blog", "GET", f"api/blogs/{self.created_blog_slug}", 200)
+            if success:
+                print(f"   📄 Retrieved blog: {blog_detail.get('title', 'N/A')}")
+        
+        # Test updating blog
+        if self.created_blog_slug:
+            update_data = {
+                "title": "Updated Test Blog Post",
+                "excerpt": "This is an updated excerpt to test the blog update functionality in the admin panel.",
+                "is_published": True
+            }
+            success, updated_blog = self.run_test("Update Blog Post", "PUT", f"api/blogs/{self.created_blog_slug}", 200, update_data)
+            if success:
+                print(f"   ✏️ Updated blog title: {updated_blog.get('title', 'N/A')}")
+        
+        # Test deleting blog
+        if self.created_blog_slug:
+            success, _ = self.run_test("Delete Blog Post", "DELETE", f"api/blogs/{self.created_blog_slug}", 200)
+            if success:
+                print(f"   🗑️ Deleted blog with slug: {self.created_blog_slug}")
+        
+        # Test 404 for non-existent blog
+        self.run_test("Non-existent Blog", "GET", "api/blogs/non-existent-blog-slug", 404)
+        
+        # Test invalid blog creation
+        invalid_blog = {
+            "title": "Short",
+            "slug": "test", 
+            "excerpt": "Too short",
+            "content": "Too short"
+        }
+        self.run_test("Invalid Blog Data", "POST", "api/blogs", 422, invalid_blog)
 
     def run_all_tests(self):
         """Run all API tests"""

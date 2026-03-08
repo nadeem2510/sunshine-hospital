@@ -14,6 +14,10 @@ import ThankYouPage from "@/pages/ThankYouPage";
 import BlogPage from "@/pages/BlogPage";
 import BlogDetailPage from "@/pages/BlogDetailPage";
 
+// Admin Pages
+import AdminBlogList from "@/pages/admin/AdminBlogList";
+import AdminBlogEditor from "@/pages/admin/AdminBlogEditor";
+
 // Layout
 import Layout from "@/components/Layout";
 
@@ -34,6 +38,10 @@ function App() {
             <Route path="contact" element={<ContactPage />} />
             <Route path="thank-you" element={<ThankYouPage />} />
           </Route>
+          {/* Admin Routes (without main layout) */}
+          <Route path="/admin/blog" element={<AdminBlogList />} />
+          <Route path="/admin/blog/new" element={<AdminBlogEditor />} />
+          <Route path="/admin/blog/edit/:slug" element={<AdminBlogEditor />} />
         </Routes>
       </BrowserRouter>
       <Toaster position="top-right" richColors />
