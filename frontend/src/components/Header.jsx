@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import AppointmentModal from "./AppointmentModal";
 
-const LOGO_URL = "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/mfclqmcn_LOGO%20SUNSHINE%20PNG.jpg";
+const LOGO_URL = "/logo.png";
 
 const navLinks = [
   { href: "/", label: "Home" },
