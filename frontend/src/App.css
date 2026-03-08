@@ -1,34 +1,113 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* Hero section background pattern */
+.hero-pattern {
+    background-image: radial-gradient(circle at 20% 80%, rgba(107, 33, 168, 0.1) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
+/* Service card icon container */
+.service-icon {
+    @apply w-14 h-14 rounded-xl flex items-center justify-center;
+    @apply bg-gradient-to-br from-purple-100 to-purple-50;
+    @apply group-hover:from-purple-200 group-hover:to-purple-100;
+    @apply transition-colors duration-300;
+}
+
+/* Doctor card image */
+.doctor-image {
+    @apply w-full h-64 object-cover object-top;
+    @apply transition-transform duration-500;
+}
+
+.doctor-card:hover .doctor-image {
+    @apply scale-105;
+}
+
+/* ESIC step indicator */
+.step-indicator {
+    @apply w-12 h-12 rounded-full flex items-center justify-center;
+    @apply bg-amber-500 text-white font-bold text-xl;
+    @apply shadow-lg;
+}
+
+/* Form input focus */
+.form-input:focus {
+    @apply ring-2 ring-purple-500 border-purple-500;
+}
+
+/* Navigation link underline effect */
+.nav-link {
+    @apply relative;
+}
+
+.nav-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-purple-700;
+    @apply transition-all duration-300;
+}
+
+.nav-link:hover::after {
+    @apply w-full;
+}
+
+/* FAQ accordion */
+.faq-item {
+    @apply border-b border-slate-200 last:border-0;
+}
+
+/* Contact card */
+.contact-card {
+    @apply bg-white rounded-2xl p-6 shadow-sm border border-slate-100;
+    @apply hover:shadow-md transition-shadow;
+}
+
+/* Stats counter */
+.stat-number {
+    @apply text-4xl md:text-5xl font-extrabold;
+    background: linear-gradient(135deg, #6B21A8 0%, #F59E0B 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Specialties grid bento layout */
+.specialties-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .specialties-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
     }
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+@media (min-width: 1024px) {
+    .specialties-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
-.App-link {
-    color: #61dafb;
+/* Emergency banner pulse */
+.emergency-banner {
+    @apply bg-red-600 text-white py-2;
+    animation: emergency-pulse 2s ease-in-out infinite;
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+@keyframes emergency-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.9; }
+}
+
+/* ESIC badge */
+.esic-badge {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-full;
+    @apply bg-green-100 text-green-800 font-semibold text-sm;
+    @apply border border-green-200;
+}
+
+/* Schema markup (hidden) */
+.schema-markup {
+    display: none !important;
 }
