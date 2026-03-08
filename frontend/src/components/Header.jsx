@@ -1,25 +1,38 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Phone, Menu, X, Clock, MapPin } from "lucide-react";
+import { Phone, Menu, Clock, MapPin, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import AppointmentModal from "./AppointmentModal";
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/mfclqmcn_LOGO%20SUNSHINE%20PNG.jpg";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/esic-cashless-treatment-sambhajinagar", label: "ESIC Cashless" },
   { href: "/services", label: "Services" },
   { href: "/doctors", label: "Doctors" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ];
 
+const insuranceLinks = [
+  { href: "/esic-cashless-treatment-sambhajinagar", label: "ESIC Cashless" },
+  { href: "/mjpjay-pmjay", label: "MJPJAY / PMJAY" },
+  { href: "/cashless-insurance", label: "Insurance Tie-ups" },
+];
+
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [showAppointment, setShowAppointment] = useState(false);
   const location = useLocation();
+
+  const isInsurancePage = insuranceLinks.some(link => location.pathname === link.href);
 
   return (
     <>
@@ -63,8 +76,43 @@ export default function Header() {
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-8">
-              {navLinks.map((link) => (
+            <nav className="hidden lg:flex items-center gap-6">
+              <Link
+                to="/"
+                className={`nav-link font-medium transition-colors ${
+                  location.pathname === "/"
+                    ? "text-purple-700"
+                    : "text-slate-700 hover:text-purple-700"
+                }`}
+              >
+                Home
+              </Link>
+              
+              {/* Insurance Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger className={`flex items-center gap-1 font-medium transition-colors ${
+                  isInsurancePage ? "text-purple-700" : "text-slate-700 hover:text-purple-700"
+                }`}>
+                  Cashless
+                  <ChevronDown className="w-4 h-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56">
+                  {insuranceLinks.map((link) => (
+                    <DropdownMenuItem key={link.href} asChild>
+                      <Link 
+                        to={link.href}
+                        className={`w-full cursor-pointer ${
+                          location.pathname === link.href ? "text-purple-700 font-medium" : ""
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {navLinks.slice(1).map((link) => (
                 <Link
                   key={link.href}
                   to={link.href}
@@ -106,7 +154,7 @@ export default function Header() {
                   <Menu className="w-6 h-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-80">
+              <SheetContent side="right" className="w-80 overflow-y-auto">
                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                 <div className="flex flex-col h-full">
                   <div className="py-6">
@@ -115,8 +163,43 @@ export default function Header() {
                       alt="Sunshine Hospital"
                       className="h-12 w-auto mb-6"
                     />
-                    <nav className="flex flex-col gap-4">
-                      {navLinks.map((link) => (
+                    <nav className="flex flex-col gap-2">
+                      <Link
+                        to="/"
+                        onClick={() => setIsOpen(false)}
+                        className={`text-lg font-medium py-2 px-4 rounded-lg transition-colors ${
+                          location.pathname === "/"
+                            ? "bg-purple-100 text-purple-700"
+                            : "text-slate-700 hover:bg-slate-100"
+                        }`}
+                      >
+                        Home
+                      </Link>
+                      
+                      {/* Cashless Section */}
+                      <div className="mt-2">
+                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 mb-2">
+                          Cashless Facilities
+                        </p>
+                        {insuranceLinks.map((link) => (
+                          <Link
+                            key={link.href}
+                            to={link.href}
+                            onClick={() => setIsOpen(false)}
+                            className={`text-base font-medium py-2 px-4 rounded-lg transition-colors block ${
+                              location.pathname === link.href
+                                ? "bg-purple-100 text-purple-700"
+                                : "text-slate-700 hover:bg-slate-100"
+                            }`}
+                          >
+                            {link.label}
+                          </Link>
+                        ))}
+                      </div>
+                      
+                      <div className="border-t border-slate-200 my-2" />
+                      
+                      {navLinks.slice(1).map((link) => (
                         <Link
                           key={link.href}
                           to={link.href}
@@ -126,7 +209,6 @@ export default function Header() {
                               ? "bg-purple-100 text-purple-700"
                               : "text-slate-700 hover:bg-slate-100"
                           }`}
-                          data-testid={`mobile-nav-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
                         >
                           {link.label}
                         </Link>

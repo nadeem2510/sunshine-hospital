@@ -5,6 +5,8 @@ import { Toaster } from "@/components/ui/sonner";
 // Pages
 import HomePage from "@/pages/HomePage";
 import ESICPage from "@/pages/ESICPage";
+import MJPJAYPage from "@/pages/MJPJAYPage";
+import InsurancePage from "@/pages/InsurancePage";
 import DoctorsPage from "@/pages/DoctorsPage";
 import DoctorProfilePage from "@/pages/DoctorProfilePage";
 import ServicesPage from "@/pages/ServicesPage";
@@ -29,6 +31,8 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
             <Route path="esic-cashless-treatment-sambhajinagar" element={<ESICPage />} />
+            <Route path="mjpjay-pmjay" element={<MJPJAYPage />} />
+            <Route path="cashless-insurance" element={<InsurancePage />} />
             <Route path="doctors" element={<DoctorsPage />} />
             <Route path="doctors/:doctorId" element={<DoctorProfilePage />} />
             <Route path="services" element={<ServicesPage />} />
