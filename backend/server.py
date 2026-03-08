@@ -439,7 +439,7 @@ SERVICES = [
             "Central Line & Arterial Line Management",
             "Dialysis Support"
         ],
-        "image": "https://images.unsplash.com/photo-1766299892683-d50398e31823?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/uaeebm62_hospital%20reception%20view%202.jpeg",
         "icon": "HeartPulse"
     },
     {
@@ -455,7 +455,7 @@ SERVICES = [
             "Blood Bank Facility",
             "Ambulance Services"
         ],
-        "image": "https://images.unsplash.com/photo-1762190042520-27e1d74d1f2b?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/ecs8c3fa_hospital%20front%20view.jpeg",
         "icon": "Ambulance"
     },
     {
@@ -471,7 +471,7 @@ SERVICES = [
             "Cholecystectomy",
             "Cancer Surgery"
         ],
-        "image": "https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=800&h=600&fit=crop",
+        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/p9gfbhd5_hospital%20reception%20view.jpeg",
         "icon": "Stethoscope"
     },
     {
@@ -487,7 +487,7 @@ SERVICES = [
             "Arthroscopic Surgery",
             "Spine Care"
         ],
-        "image": "https://images.unsplash.com/photo-1688736867121-b8adc15233d9?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/jvlmpt6c_WAITING%20AREA%202.jpeg",
         "icon": "Bone"
     },
     {
@@ -503,7 +503,7 @@ SERVICES = [
             "Respiratory Conditions",
             "Infectious Diseases"
         ],
-        "image": "https://images.unsplash.com/photo-1659353888906-adb3e0041693?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/uaeebm62_hospital%20reception%20view%202.jpeg",
         "icon": "Activity"
     }
 ]

@@ -132,8 +132,8 @@ export default function HomePage() {
             <div className="relative animate-fade-in-up stagger-2">
               <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                 <img
-                  src="https://images.unsplash.com/photo-1659353888906-adb3e0041693?crop=entropy&cs=srgb&fm=jpg&q=85&w=800"
-                  alt="Compassionate Doctor at Sunshine Hospital"
+                  src="https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/ecs8c3fa_hospital%20front%20view.jpeg"
+                  alt="Sunshine Hospital Building - Chhatrapati Sambhajinagar"
                   className="w-full h-[400px] md:h-[500px] object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-purple-900/30 to-transparent" />
@@ -263,8 +263,8 @@ export default function HomePage() {
             </div>
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1679516345414-f0f281019d13?crop=entropy&cs=srgb&fm=jpg&q=85&w=600"
-                alt="Sunshine Hospital Building"
+                src="https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/p9gfbhd5_hospital%20reception%20view.jpeg"
+                alt="Sunshine Hospital Reception"
                 className="rounded-2xl shadow-2xl"
               />
             </div>
