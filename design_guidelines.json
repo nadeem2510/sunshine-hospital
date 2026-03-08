@@ -1,0 +1,159 @@
+{
+  "identity": {
+    "name": "Sunshine Hospital",
+    "tone": "Trustworthy, Professional, Compassionate, Accessible",
+    "archetype": "The Caregiver (with a touch of Modern Efficiency)",
+    "audience": "Industrial workers (ESIC), Local families, Emergency patients"
+  },
+  "theme": {
+    "mode": "light",
+    "style": "Medical Clean",
+    "visual_enhancers": {
+      "glassmorphism": "Used sparingly for sticky headers and floating notifications (bg-white/80 backdrop-blur-md)",
+      "shadows": "Soft, diffuse shadows for cards (shadow-sm, shadow-md). No harsh drops.",
+      "borders": "Subtle 1px borders (border-slate-200) for definition."
+    }
+  },
+  "colors": {
+    "palette": {
+      "primary": {
+        "DEFAULT": "#6B21A8",
+        "foreground": "#FFFFFF",
+        "description": "Deep Purple from logo. Use for Headings, Brand accents, and Primary icons."
+      },
+      "secondary": {
+        "DEFAULT": "#F59E0B",
+        "foreground": "#FFFFFF",
+        "description": "Warm Amber/Orange from logo. Use for CTAs (Book Appointment, Emergency), Highlights, and decorative blobs."
+      },
+      "background": "#F8FAFC",
+      "surface": "#FFFFFF",
+      "text": {
+        "primary": "#1E293B",
+        "secondary": "#64748B",
+        "muted": "#94A3B8"
+      },
+      "success": "#10B981",
+      "error": "#EF4444"
+    },
+    "gradients": {
+      "brand": "from-purple-700 to-purple-900",
+      "warm": "from-amber-400 to-orange-500"
+    }
+  },
+  "typography": {
+    "headings": {
+      "family": "Manrope, sans-serif",
+      "weights": ["600", "700", "800"],
+      "usage": "All section titles, hero text. Avoid Inter."
+    },
+    "body": {
+      "family": "IBM Plex Sans, sans-serif",
+      "weights": ["400", "500"],
+      "usage": "Paragraphs, UI text, labels."
+    },
+    "scale": {
+      "h1": "text-4xl md:text-5xl lg:text-6xl tracking-tight",
+      "h2": "text-3xl md:text-4xl tracking-tight",
+      "h3": "text-2xl md:text-3xl",
+      "body": "text-base md:text-lg leading-relaxed"
+    }
+  },
+  "layout_strategy": {
+    "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "spacing": "Generous. Section padding py-16 or py-24. Component gap-8.",
+    "grid_system": "Bento Grid for Services. 12-col grid for layouts.",
+    "mobile_first": {
+      "rules": [
+        "Stack columns vertically on mobile (grid-cols-1).",
+        "Minimum touch target size 44px.",
+        "Sticky bottom bar for 'Call Now' on mobile."
+      ]
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-secondary text-white hover:bg-secondary/90 shadow-lg rounded-full font-semibold px-8 py-3 transition-transform hover:scale-105",
+      "outline": "border-2 border-primary text-primary hover:bg-primary/5 rounded-full font-semibold px-8 py-3",
+      "ghost": "text-primary hover:bg-primary/5 rounded-lg px-4 py-2"
+    },
+    "cards": {
+      "service": "bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow group",
+      "doctor": "bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all border border-slate-100"
+    },
+    "forms": {
+      "input": "bg-slate-50 border-slate-200 focus:border-primary focus:ring-primary rounded-lg",
+      "label": "text-slate-700 font-medium mb-1.5 block"
+    }
+  },
+  "assets": {
+    "images": [
+      {
+        "category": "hero",
+        "url": "https://images.unsplash.com/photo-1659353888906-adb3e0041693?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "alt": "Compassionate Indian Doctor",
+        "description": "Use in Hero section or Trust section."
+      },
+      {
+        "category": "building",
+        "url": "https://images.unsplash.com/photo-1679516345414-f0f281019d13?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "alt": "Sunshine Hospital Building",
+        "description": "Use in Contact or About section."
+      },
+      {
+        "category": "icu",
+        "url": "https://images.unsplash.com/photo-1766299892683-d50398e31823?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "alt": "Advanced ICU Equipment",
+        "description": "Use for ICU Service card/page."
+      },
+      {
+        "category": "surgery",
+        "url": "https://images.unsplash.com/photo-1762190042520-27e1d74d1f2b?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "alt": "Surgery Team",
+        "description": "Use for General Surgery or Trauma Center."
+      },
+      {
+        "category": "orthopedic",
+        "url": "https://images.unsplash.com/photo-1688736867121-b8adc15233d9?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "alt": "Orthopedic Consultation",
+        "description": "Use for Dr. Mangesh Rajput's section or Orthopedics service."
+      },
+      {
+        "category": "logo",
+        "url": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/mfclqmcn_LOGO%20SUNSHINE%20PNG.jpg",
+        "alt": "Sunshine Hospital Logo",
+        "description": "Main logo."
+      }
+    ],
+    "icons": {
+      "library": "lucide-react",
+      "style": "Stroke width 1.5 or 2. Color: Primary (Purple)."
+    }
+  },
+  "instructions_to_main_agent": [
+    "Implement a 'Light Mode' first design. Do not assume Dark Mode is needed unless toggled.",
+    "Use 'Manrope' for all headings to give a modern, friendly medical feel.",
+    "Use 'IBM Plex Sans' for body text for maximum legibility.",
+    "The Primary Color is Purple (#6B21A8). Use this for Headers, Text Highlights, and Primary Icons.",
+    "The Secondary Color is Amber/Orange (#F59E0B). CRITICAL: Use this for 'Call to Action' buttons (Book Appointment, Call Emergency). It stands out against the white/purple theme.",
+    "Create a 'Sticky Header' that always shows the Emergency Number and 'Book Appointment' button.",
+    "ESIC Pillar Page: Make this section distinct. Use a soft purple background (bg-purple-50) with clear steps.",
+    "Forms: Use Shadcn UI components (Dialog, Input, Select, Calendar). Customize them to have rounded corners (rounded-lg) and soft borders.",
+    "Animations: Add subtle 'fade-in-up' animations to sections as they scroll into view. Use 'hover:scale-105' for cards.",
+    "Mobile Responsiveness: Ensure the Navbar collapses into a Hamburger menu on mobile. Add a fixed bottom bar on mobile with 'Call' and 'Book' buttons.",
+    "SEO: Ensure <h1> tags are used for main headings and <h2> for section headings. Add alt text to all images.",
+    "Data-TestID: Add 'data-testid' to all interactive elements (buttons, inputs, links) as per the rules."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Don't make generic centered layouts. Use split layouts, grids, and asymmetry where appropriate.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur) for overlays.",
+    "You MUST NOT apply universal transition (transition: all). Use specific transitions (transition-colors, transition-transform).",
+    "You MUST NOT center align the app container. This disrupts natural reading flow.",
+    "Always use modern button styles (pill-shaped or rounded-lg).",
+    "Every interaction needs micro-animations (hover, focus, active).",
+    "Use 2-3x more spacing than feels comfortable (p-8, p-12, py-24).",
+    "Use 'sonner' for toast notifications."
+  ]
+}
