@@ -1,4 +1,5 @@
-from fastapi import FastAPI, APIRouter, HTTPException
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, Header
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -8,8 +9,10 @@ from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from typing import List, Optional
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from enum import Enum
+import jwt
+import httpx
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -24,6 +27,50 @@ app = FastAPI(title="Sunshine Hospital API", version="1.0.0")
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
+
+# Security
+security = HTTPBearer()
+JWT_SECRET = os.environ.get('JWT_SECRET', 'default-secret-key')
+ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'admin')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'Sunshine@2024')
+SIMPLIFIED_API_KEY = os.environ.get('SIMPLIFIED_API_KEY', '')
+
+# Auth Models
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+class LoginResponse(BaseModel):
+    token: str
+    username: str
+    expires_at: str
+
+class TokenVerifyResponse(BaseModel):
+    valid: bool
+    username: str
+
+# Auth Helper Functions
+def create_token(username: str) -> str:
+    expiry = datetime.now(timezone.utc) + timedelta(hours=24)
+    payload = {
+        "username": username,
+        "exp": expiry.timestamp()
+    }
+    return jwt.encode(payload, JWT_SECRET, algorithm="HS256")
+
+def verify_token(token: str) -> dict:
+    try:
+        payload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
+        if payload["exp"] < datetime.now(timezone.utc).timestamp():
+            raise HTTPException(status_code=401, detail="Token expired")
+        return payload
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    token = credentials.credentials
+    payload = verify_token(token)
+    return payload["username"]
 
 # Enums
 class AppointmentStatus(str, Enum):
@@ -536,6 +583,27 @@ async def root():
 @api_router.get("/health")
 async def health_check():
     return {"status": "healthy", "timestamp": datetime.now(timezone.utc).isoformat()}
+
+# Auth Endpoints
+@api_router.post("/auth/login", response_model=LoginResponse)
+async def login(request: LoginRequest):
+    if request.username == ADMIN_USERNAME and request.password == ADMIN_PASSWORD:
+        token = create_token(request.username)
+        expiry = datetime.now(timezone.utc) + timedelta(hours=24)
+        return LoginResponse(
+            token=token,
+            username=request.username,
+            expires_at=expiry.isoformat()
+        )
+    raise HTTPException(status_code=401, detail="Invalid username or password")
+
+@api_router.get("/auth/verify", response_model=TokenVerifyResponse)
+async def verify_auth(username: str = Depends(get_current_user)):
+    return TokenVerifyResponse(valid=True, username=username)
+
+@api_router.post("/auth/logout")
+async def logout():
+    return {"message": "Logged out successfully"}
 
 # Hospital Info
 @api_router.get("/hospital-info")

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { 
   Plus, Edit, Trash2, Eye, EyeOff, Search,
-  FileText, ArrowLeft, MoreVertical
+  FileText, ArrowLeft, MoreVertical, LogOut
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import axios from "axios";
+import { useAuth } from "@/context/AuthContext";
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -42,11 +43,18 @@ const categoryLabels = {
 
 export default function AdminBlogList() {
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [blogToDelete, setBlogToDelete] = useState(null);
+
+  const handleLogout = () => {
+    logout();
+    toast.success("Logged out successfully");
+    navigate("/admin/login");
+  };
 
   useEffect(() => {
     fetchBlogs();
@@ -129,15 +137,30 @@ export default function AdminBlogList() {
                 <p className="text-sm text-slate-500">Manage your medical articles</p>
               </div>
             </div>
-            <Link to="/admin/blog/new">
-              <Button 
-                className="bg-amber-500 hover:bg-amber-600 text-white rounded-full"
-                data-testid="new-blog-btn"
+            <div className="flex items-center gap-3">
+              <span className="text-sm text-slate-500 hidden sm:block">
+                Welcome, {user?.username}
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleLogout}
+                className="text-slate-600"
+                data-testid="logout-btn"
               >
-                <Plus className="w-4 h-4 mr-2" />
-                New Article
+                <LogOut className="w-4 h-4 mr-2" />
+                Logout
               </Button>
-            </Link>
+              <Link to="/admin/blog/new">
+                <Button 
+                  className="bg-amber-500 hover:bg-amber-600 text-white rounded-full"
+                  data-testid="new-blog-btn"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  New Article
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
