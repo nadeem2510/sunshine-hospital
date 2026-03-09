@@ -78,9 +78,10 @@ agenthub/agents/youtube/db
 
 # Mobile development
 android-sdk/ -e 
-# Environment files
-*.env
-*.env.*
+
+# Note: .env files are NOT ignored - they are required for Kubernetes deployment
+# Environment values are injected at runtime by the deployment platform
+
 frontend/node_modules/.cache/default-development/0.pack
 frontend/node_modules/.cache/default-development/3.pack
 frontend/node_modules/.cache/default-development/9.pack
