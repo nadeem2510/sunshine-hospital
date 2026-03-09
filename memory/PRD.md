@@ -1,7 +1,7 @@
 # Sunshine Hospital Medical Website - PRD
 
 ## Original Problem Statement
-Build a professional, high-performance multi-page medical website for "Sunshine Hospital" in Chhatrapati Sambhajinagar. Position the hospital as a premier authorized ESIC Cashless Treatment facility while showcasing multispecialty clinical expertise.
+Build a professional, high-performance multi-page medical website for "Sunshine Hospital" in Chhatrapati Sambhajinagar. Position the hospital as a premier authorized ESIC Cashless Treatment facility while showcasing multispecialty clinical expertise. Implement a "Hub & Spoke" architecture for key specialty centers.
 
 ## User Personas
 1. **ESIC Beneficiaries**: Industrial workers from Waluj, Chikalthana, MIDC seeking cashless treatment
@@ -13,6 +13,7 @@ Build a professional, high-performance multi-page medical website for "Sunshine 
 - ESIC Pillar Page at /esic-cashless-treatment-sambhajinagar/
 - Doctor Profiles (Real doctors from sunshinehospital.org)
 - Service Pages (ICU, Trauma Center, General Surgery, Orthopedics, General Medicine)
+- **Hub & Spoke Architecture** - 4 Centers of Excellence with dedicated pages
 - ESIC Eligibility Form with smart routing
 - Appointment Booking System
 - Contact Form
@@ -22,7 +23,34 @@ Build a professional, high-performance multi-page medical website for "Sunshine 
 
 ## What's Been Implemented
 
-### March 8, 2025 - Initial MVP
+### March 9, 2025 - Hub & Spoke Architecture (COMPLETE)
+- [x] **Mega Menu Component** - Visual dropdown for specialty hubs with sublinks
+- [x] **4 Specialty Hub Pages**:
+  - /knee-replacement - Knee Replacement Center
+  - /hip-replacement - Hip Replacement Specialists
+  - /spine-surgery - Spine Surgery Center
+  - /cancer-care - Cancer Care Institute
+- [x] **Hub Page Components**:
+  - Hero section with stats (300+ surgeries, 98% success rate, etc.)
+  - Procedures section with duration and recovery times
+  - Conditions treated section
+  - Recovery Timeline component (visual patient journey)
+  - Meet The Experts component (doctors filtered by specialty)
+  - FAQ section with accordion
+  - Sticky Booking CTA (mobile and desktop versions)
+- [x] **Advanced SEO Schemas**:
+  - MedicalSpecialty schema with nested MedicalProcedure schemas
+  - generateHubSchema() function for hub pages
+  - generateProcedureSchema() for individual procedures
+- [x] **301 Redirects** for old service URLs:
+  - /api/redirect/orthopedics → /knee-replacement
+  - /api/redirect/joint-replacement → /knee-replacement
+  - /api/redirect/oncology → /cancer-care
+  - /api/redirect/cancer-treatment → /cancer-care
+  - /api/redirect/back-surgery → /spine-surgery
+  - /api/redirect/spine-care → /spine-surgery
+- [x] Updated robots.txt with hub pages
+- [x] Updated sitemap.xml with hub pages (priority 0.95)
 - [x] Home Page with hero, stats, services grid, doctors preview
 - [x] ESIC Pillar Page with 3-step process, FAQ, eligibility form
 - [x] Doctors listing and individual profile pages (2 doctors)
@@ -149,19 +177,36 @@ Build a professional, high-performance multi-page medical website for "Sunshine 
 - [x] All 8 doctors displayed
 - [x] Admin login secured
 - [x] SEO meta tags & schema
+- [x] Hub & Spoke architecture implemented
+- [x] Email notifications for appointments
 
 ### P1 (High Priority)
 - [ ] Deploy to www.sunshinehospital.org
 - [ ] Admin dashboard for appointments/inquiries
-- [ ] Email notifications for new appointments
-- [ ] WhatsApp integration
+- [ ] Image optimization (WebP/AVIF format, keyword-rich alt-text)
 - [ ] Connect blog to WordPress/Simplified.com
+- [ ] WhatsApp integration
 
 ### P2 (Enhancement)
+- [ ] AI & semantic search integration
+- [ ] Multi-language support (Hindi/Marathi) with hreflang tags
 - [ ] Patient testimonials section
 - [ ] Photo gallery of hospital
-- [ ] Multi-language support (Hindi/Marathi)
 - [ ] Appointment SMS reminders
+
+### P3 (Refactoring)
+- [ ] Break down backend server.py into routers
+- [ ] Migrate hardcoded doctor/service data to MongoDB
+- [ ] Abstract hub pages into reusable HubPageLayout component
+- [ ] Automated internal linking for blog posts
+
+## Hub Pages Architecture
+| Page | URL | Lead Doctor | Specialty |
+|------|-----|------------|-----------|
+| Knee Replacement | /knee-replacement | Dr. Gajanan Deshmukh | Orthopedics |
+| Hip Replacement | /hip-replacement | Dr. Gajanan Deshmukh | Orthopedics |
+| Spine Surgery | /spine-surgery | Dr. Gajanan Deshmukh | Orthopedics |
+| Cancer Care | /cancer-care | Dr. Mubasheer Qazi | General Surgery |
 
 ## Contact Information
 - Phone: 9130561222, 02402990699
