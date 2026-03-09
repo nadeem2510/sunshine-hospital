@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Depends, Header
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, Header, BackgroundTasks
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
@@ -16,6 +16,9 @@ import httpx
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
+
+# Import email service
+from email_service import send_appointment_notification, send_esic_inquiry_notification, send_contact_notification
 
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
@@ -636,11 +639,15 @@ async def get_service(service_slug: str):
 
 # Appointments
 @api_router.post("/appointments", response_model=Appointment)
-async def create_appointment(input: AppointmentCreate):
+async def create_appointment(input: AppointmentCreate, background_tasks: BackgroundTasks):
     appointment = Appointment(**input.model_dump())
     doc = appointment.model_dump()
     doc['created_at'] = doc['created_at'].isoformat()
     await db.appointments.insert_one(doc)
+    
+    # Send email notification in background
+    background_tasks.add_task(send_appointment_notification, doc)
+    
     return appointment
 
 @api_router.get("/appointments", response_model=List[Appointment])
@@ -653,13 +660,17 @@ async def get_appointments(limit: int = 100, skip: int = 0):
 
 # ESIC Inquiries
 @api_router.post("/esic-inquiry", response_model=ESICInquiry)
-async def create_esic_inquiry(input: ESICInquiryCreate):
+async def create_esic_inquiry(input: ESICInquiryCreate, background_tasks: BackgroundTasks):
     # Determine eligibility based on documents
     is_eligible = input.has_epehchan and input.has_referral
     inquiry = ESICInquiry(**input.model_dump(), is_eligible=is_eligible)
     doc = inquiry.model_dump()
     doc['created_at'] = doc['created_at'].isoformat()
     await db.esic_inquiries.insert_one(doc)
+    
+    # Send email notification in background
+    background_tasks.add_task(send_esic_inquiry_notification, doc)
+    
     return inquiry
 
 @api_router.get("/esic-inquiries", response_model=List[ESICInquiry])
@@ -672,11 +683,15 @@ async def get_esic_inquiries(limit: int = 100, skip: int = 0):
 
 # Contact Form
 @api_router.post("/contact", response_model=Contact)
-async def create_contact(input: ContactCreate):
+async def create_contact(input: ContactCreate, background_tasks: BackgroundTasks):
     contact = Contact(**input.model_dump())
     doc = contact.model_dump()
     doc['created_at'] = doc['created_at'].isoformat()
     await db.contacts.insert_one(doc)
+    
+    # Send email notification in background
+    background_tasks.add_task(send_contact_notification, doc)
+    
     return contact
 
 # Blog endpoints
