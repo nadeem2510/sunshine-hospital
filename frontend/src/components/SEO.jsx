@@ -193,7 +193,12 @@ export default function SEO({
   // Combine schemas - include all enhanced schemas
   const schemas = [medicalBusinessSchema, localBusinessSchema, ...medicalSpecialtySchemas];
   if (schema) {
-    schemas.push(schema);
+    // Handle both single schema and array of schemas
+    if (Array.isArray(schema)) {
+      schemas.push(...schema);
+    } else {
+      schemas.push(schema);
+    }
   }
   
   // Add breadcrumb schema if provided
@@ -406,3 +411,110 @@ export const generateFAQSchema = (faqs) => ({
     }
   }))
 });
+
+// Advanced Hub Page Schema - MedicalSpecialty with nested MedicalProcedure
+export const generateHubSchema = (hubData) => {
+  const SITE_URL = "https://www.sunshinehospital.org";
+  
+  return {
+    "@context": "https://schema.org",
+    "@type": "MedicalSpecialty",
+    "@id": `${SITE_URL}${hubData.url}#specialty`,
+    "name": hubData.name,
+    "alternateName": hubData.alternateName || hubData.name,
+    "description": hubData.description,
+    "url": `${SITE_URL}${hubData.url}`,
+    "image": hubData.heroImage,
+    "medicalSpecialty": hubData.medicalSpecialtyType || "Orthopedic",
+    "relevantSpecialty": {
+      "@type": "MedicalSpecialty",
+      "name": hubData.parentSpecialty || "Orthopedics"
+    },
+    "isAcceptingNewPatients": true,
+    "availableService": hubData.procedures?.map(proc => ({
+      "@type": "MedicalProcedure",
+      "@id": `${SITE_URL}${hubData.url}/${proc.slug}`,
+      "name": proc.name,
+      "description": proc.description,
+      "procedureType": "http://schema.org/SurgicalProcedure",
+      "howPerformed": proc.howPerformed || "Performed under anesthesia by experienced surgeons",
+      "preparation": proc.preparation || "Pre-operative assessment, blood tests, imaging",
+      "followup": proc.followup || "Post-operative physiotherapy and rehabilitation",
+      "status": "http://schema.org/ActiveActionStatus",
+      "typicalAgeRange": proc.ageRange || "40-80",
+      "bodyLocation": proc.bodyLocation || hubData.bodyLocation,
+      "outcome": proc.outcome || "Pain relief and improved mobility",
+      "risks": proc.risks || ["Infection", "Blood clots", "Implant complications"],
+      "procedureType": "http://schema.org/SurgicalProcedure"
+    })) || [],
+    "provider": {
+      "@type": "Hospital",
+      "@id": `${SITE_URL}/#hospital`,
+      "name": "Sunshine Hospital",
+      "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/29y24j9j_Hospital%20Building%20Exterior.png",
+      "telephone": "+91-9130561222",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Plot No 7, Gut 36, Satara Parisar, Opp Patel Lawns, Beed Bypass Road",
+        "addressLocality": "Chhatrapati Sambhajinagar",
+        "addressRegion": "Maharashtra",
+        "postalCode": "431001",
+        "addressCountry": "IN"
+      }
+    },
+    "areaServed": {
+      "@type": "GeoCircle",
+      "geoMidpoint": {
+        "@type": "GeoCoordinates",
+        "latitude": "19.8762",
+        "longitude": "75.3433"
+      },
+      "geoRadius": "100000"
+    },
+    "aggregateRating": hubData.rating ? {
+      "@type": "AggregateRating",
+      "ratingValue": hubData.rating.value || "4.8",
+      "reviewCount": hubData.rating.count || "150",
+      "bestRating": "5"
+    } : undefined
+  };
+};
+
+// Generate Procedure Schema for individual procedure pages
+export const generateProcedureSchema = (procedure, hubUrl) => {
+  const SITE_URL = "https://www.sunshinehospital.org";
+  
+  return {
+    "@context": "https://schema.org",
+    "@type": "MedicalProcedure",
+    "@id": `${SITE_URL}${hubUrl}/${procedure.slug}`,
+    "name": procedure.name,
+    "description": procedure.description,
+    "url": `${SITE_URL}${hubUrl}/${procedure.slug}`,
+    "image": procedure.image,
+    "procedureType": "http://schema.org/SurgicalProcedure",
+    "bodyLocation": procedure.bodyLocation,
+    "howPerformed": procedure.howPerformed || "Surgical procedure performed under anesthesia",
+    "preparation": procedure.preparation || "Pre-operative assessment and medical clearance",
+    "followup": procedure.followup || "Post-operative rehabilitation and follow-up visits",
+    "status": "http://schema.org/ActiveActionStatus",
+    "study": procedure.studies ? procedure.studies.map(study => ({
+      "@type": "MedicalStudy",
+      "name": study.name,
+      "outcome": study.outcome
+    })) : undefined,
+    "possibleTreatment": procedure.alternatives?.map(alt => ({
+      "@type": "MedicalTherapy",
+      "name": alt
+    })),
+    "contraindication": procedure.contraindications?.map(c => ({
+      "@type": "MedicalContraindication",
+      "name": c
+    })),
+    "provider": {
+      "@type": "Hospital",
+      "@id": `${SITE_URL}/#hospital`,
+      "name": "Sunshine Hospital"
+    }
+  };
+};

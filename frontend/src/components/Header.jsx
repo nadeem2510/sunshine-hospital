@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Phone, Menu, Clock, MapPin, ChevronDown } from "lucide-react";
+import { Phone, Menu, Clock, MapPin, ChevronDown, Bone, Activity, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import {
@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import AppointmentModal from "./AppointmentModal";
+import MegaMenu, { specialtyHubs } from "./MegaMenu";
 
 const LOGO_URL = "/logo.png";
 
@@ -30,9 +31,11 @@ const insuranceLinks = [
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [showAppointment, setShowAppointment] = useState(false);
+  const [showMegaMenu, setShowMegaMenu] = useState(false);
   const location = useLocation();
 
   const isInsurancePage = insuranceLinks.some(link => location.pathname === link.href);
+  const isSpecialtyPage = specialtyHubs.some(hub => location.pathname.startsWith(hub.url));
 
   return (
     <>
@@ -87,6 +90,23 @@ export default function Header() {
               >
                 Home
               </Link>
+              
+              {/* Specialties Mega Menu */}
+              <div 
+                className="relative"
+                onMouseEnter={() => setShowMegaMenu(true)}
+                onMouseLeave={() => setShowMegaMenu(false)}
+              >
+                <button 
+                  className={`flex items-center gap-1 font-medium transition-colors ${
+                    isSpecialtyPage ? "text-purple-700" : "text-slate-700 hover:text-purple-700"
+                  }`}
+                >
+                  Specialties
+                  <ChevronDown className={`w-4 h-4 transition-transform ${showMegaMenu ? 'rotate-180' : ''}`} />
+                </button>
+                <MegaMenu isOpen={showMegaMenu} onClose={() => setShowMegaMenu(false)} />
+              </div>
               
               {/* Insurance Dropdown */}
               <DropdownMenu>
@@ -193,6 +213,28 @@ export default function Header() {
                             }`}
                           >
                             {link.label}
+                          </Link>
+                        ))}
+                      </div>
+                      
+                      {/* Specialty Hubs */}
+                      <div className="mt-4">
+                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 mb-2">
+                          Centers of Excellence
+                        </p>
+                        {specialtyHubs.map((hub) => (
+                          <Link
+                            key={hub.url}
+                            to={hub.url}
+                            onClick={() => setIsOpen(false)}
+                            className={`flex items-center gap-3 text-base font-medium py-2 px-4 rounded-lg transition-colors ${
+                              location.pathname.startsWith(hub.url)
+                                ? "bg-purple-100 text-purple-700"
+                                : "text-slate-700 hover:bg-slate-100"
+                            }`}
+                          >
+                            <hub.icon className="w-5 h-5" />
+                            {hub.name}
                           </Link>
                         ))}
                       </div>

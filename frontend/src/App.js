@@ -1,5 +1,5 @@
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/context/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
@@ -18,6 +18,12 @@ import ThankYouPage from "@/pages/ThankYouPage";
 import BlogPage from "@/pages/BlogPage";
 import BlogDetailPage from "@/pages/BlogDetailPage";
 import { WalujHospitalPage, ChikalthanaHospitalPage, MIDCHospitalPage } from "@/pages/LocationPage";
+
+// Specialty Hub Pages
+import KneeReplacementHub from "@/pages/hubs/KneeReplacementHub";
+import HipReplacementHub from "@/pages/hubs/HipReplacementHub";
+import SpineSurgeryHub from "@/pages/hubs/SpineSurgeryHub";
+import CancerCareHub from "@/pages/hubs/CancerCareHub";
 
 // Admin Pages
 import AdminLogin from "@/pages/admin/AdminLogin";
@@ -50,6 +56,19 @@ function App() {
               <Route path="waluj-hospital" element={<WalujHospitalPage />} />
               <Route path="chikalthana-hospital" element={<ChikalthanaHospitalPage />} />
               <Route path="midc-hospital" element={<MIDCHospitalPage />} />
+              
+              {/* Specialty Hub Pages - Centers of Excellence */}
+              <Route path="knee-replacement" element={<KneeReplacementHub />} />
+              <Route path="knee-replacement/*" element={<KneeReplacementHub />} />
+              <Route path="hip-replacement" element={<HipReplacementHub />} />
+              <Route path="hip-replacement/*" element={<HipReplacementHub />} />
+              <Route path="spine-surgery" element={<SpineSurgeryHub />} />
+              <Route path="spine-surgery/*" element={<SpineSurgeryHub />} />
+              <Route path="cancer-care" element={<CancerCareHub />} />
+              <Route path="cancer-care/*" element={<CancerCareHub />} />
+              
+              {/* 301 Redirects from old service URLs */}
+              <Route path="services/orthopedics" element={<Navigate to="/knee-replacement" replace />} />
             </Route>
             {/* Admin Routes */}
             <Route path="/admin/login" element={<AdminLogin />} />

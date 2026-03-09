@@ -1,5 +1,6 @@
 from fastapi import FastAPI, APIRouter, HTTPException, Depends, Header, BackgroundTasks
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.responses import RedirectResponse
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -834,6 +835,11 @@ async def get_sitemap():
         {"url": "/waluj-hospital", "priority": "0.8", "changefreq": "monthly"},
         {"url": "/chikalthana-hospital", "priority": "0.8", "changefreq": "monthly"},
         {"url": "/midc-hospital", "priority": "0.8", "changefreq": "monthly"},
+        # Specialty Hub Pages - Centers of Excellence
+        {"url": "/knee-replacement", "priority": "0.95", "changefreq": "weekly"},
+        {"url": "/hip-replacement", "priority": "0.95", "changefreq": "weekly"},
+        {"url": "/spine-surgery", "priority": "0.95", "changefreq": "weekly"},
+        {"url": "/cancer-care", "priority": "0.95", "changefreq": "weekly"},
     ]
     
     # Generate sitemap XML
@@ -903,8 +909,52 @@ Allow: /contact
 Allow: /waluj-hospital
 Allow: /chikalthana-hospital
 Allow: /midc-hospital
+
+# Specialty Hub Pages
+Allow: /knee-replacement
+Allow: /hip-replacement
+Allow: /spine-surgery
+Allow: /cancer-care
 """
     return Response(content=robots_content, media_type="text/plain")
+
+# 301 Redirects for old service URLs to new Hub pages
+# These redirects help maintain SEO juice from old URLs
+
+@api_router.get("/redirect/orthopedics")
+async def redirect_orthopedics():
+    """Redirect old orthopedics page to knee replacement hub"""
+    return RedirectResponse(url="/knee-replacement", status_code=301)
+
+@api_router.get("/redirect/joint-replacement")
+async def redirect_joint_replacement():
+    """Redirect old joint replacement page to knee replacement hub"""
+    return RedirectResponse(url="/knee-replacement", status_code=301)
+
+@api_router.get("/redirect/bone-surgery")
+async def redirect_bone_surgery():
+    """Redirect old bone surgery page to orthopedics services"""
+    return RedirectResponse(url="/knee-replacement", status_code=301)
+
+@api_router.get("/redirect/oncology")
+async def redirect_oncology():
+    """Redirect old oncology page to cancer care hub"""
+    return RedirectResponse(url="/cancer-care", status_code=301)
+
+@api_router.get("/redirect/cancer-treatment")
+async def redirect_cancer_treatment():
+    """Redirect old cancer treatment page to cancer care hub"""
+    return RedirectResponse(url="/cancer-care", status_code=301)
+
+@api_router.get("/redirect/back-surgery")
+async def redirect_back_surgery():
+    """Redirect old back surgery page to spine surgery hub"""
+    return RedirectResponse(url="/spine-surgery", status_code=301)
+
+@api_router.get("/redirect/spine-care")
+async def redirect_spine_care():
+    """Redirect old spine care page to spine surgery hub"""
+    return RedirectResponse(url="/spine-surgery", status_code=301)
 
 # Include the router in the main app
 app.include_router(api_router)
