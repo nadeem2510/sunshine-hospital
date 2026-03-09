@@ -250,7 +250,7 @@ export default function ContactPage() {
               <Card className="bg-white rounded-2xl shadow-lg overflow-hidden">
                 <div className="h-[400px]">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3752.227!2d75.3433!3d19.8762!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdba2f5e45a7c97%3A0x2c11b9d6b9e8c0d5!2sSunshine%20Hospital!5e0!3m2!1sen!2sin!4v1709913600000!5m2!1sen!2sin"
+                    src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1876.1!2d75.310582!3d19.853523!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTnCsDUxJzEyLjciTiA3NcKwMTgnMzguMSJF!5e0!3m2!1sen!2sin!4v1709913600000!5m2!1sen!2sin"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}

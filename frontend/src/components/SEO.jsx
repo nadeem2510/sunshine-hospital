@@ -40,8 +40,8 @@ const medicalBusinessSchema = {
   },
   "geo": {
     "@type": "GeoCoordinates",
-    "latitude": "19.8762",
-    "longitude": "75.3433"
+    "latitude": "19.853523",
+    "longitude": "75.310582"
   },
   "hasMap": "https://maps.app.goo.gl/SvNZ93US42FUhZ166",
   "openingHoursSpecification": [
@@ -153,8 +153,8 @@ const localBusinessSchema = {
   },
   "geo": {
     "@type": "GeoCoordinates",
-    "latitude": "19.8762",
-    "longitude": "75.3433"
+    "latitude": "19.853523",
+    "longitude": "75.310582"
   },
   "areaServed": [
     "Waluj",
@@ -252,8 +252,8 @@ export default function SEO({
       <meta name="author" content="Sunshine Hospital" />
       <meta name="geo.region" content="IN-MH" />
       <meta name="geo.placename" content="Chhatrapati Sambhajinagar" />
-      <meta name="geo.position" content="19.8762;75.3433" />
-      <meta name="ICBM" content="19.8762, 75.3433" />
+      <meta name="geo.position" content="19.853523;75.310582" />
+      <meta name="ICBM" content="19.853523, 75.310582" />
 
       {/* Schema.org Structured Data */}
       {schemas.map((s, index) => (
@@ -466,8 +466,8 @@ export const generateHubSchema = (hubData) => {
       "@type": "GeoCircle",
       "geoMidpoint": {
         "@type": "GeoCoordinates",
-        "latitude": "19.8762",
-        "longitude": "75.3433"
+        "latitude": "19.853523",
+        "longitude": "75.310582"
       },
       "geoRadius": "100000"
     },
