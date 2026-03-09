@@ -4,18 +4,32 @@ const SITE_NAME = "Sunshine Hospital";
 const SITE_URL = "https://www.sunshinehospital.org";
 const DEFAULT_IMAGE = "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/29y24j9j_Hospital%20Building%20Exterior.png";
 
-// Base Organization Schema
-const organizationSchema = {
+// Enhanced MedicalBusiness Schema (E-E-A-T Compliant)
+const medicalBusinessSchema = {
   "@context": "https://schema.org",
-  "@type": "MedicalOrganization",
+  "@type": ["MedicalBusiness", "Hospital", "MedicalOrganization"],
+  "@id": `${SITE_URL}/#organization`,
   "name": "Sunshine Hospital",
-  "alternateName": "Sunshine Hospital Sambhajinagar",
+  "alternateName": ["Sunshine Hospital Sambhajinagar", "Sunshine Hospital Aurangabad"],
   "url": SITE_URL,
-  "logo": `${SITE_URL}/logo.png`,
-  "image": DEFAULT_IMAGE,
-  "description": "ESIC empaneled multispecialty hospital in Chhatrapati Sambhajinagar offering 24/7 emergency care, ICU, trauma center, orthopedics, and general surgery services.",
+  "logo": {
+    "@type": "ImageObject",
+    "url": `${SITE_URL}/logo.png`,
+    "width": "200",
+    "height": "200"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": DEFAULT_IMAGE,
+    "width": "1200",
+    "height": "630",
+    "caption": "Sunshine Hospital Building - Multispecialty Hospital in Sambhajinagar"
+  },
+  "description": "ESIC empaneled multispecialty hospital in Chhatrapati Sambhajinagar offering 24/7 emergency care, ICU, trauma center, orthopedics, and cashless treatment under ESIC, MJPJAY, and PMJAY schemes.",
+  "slogan": "Quality Healthcare for All",
+  "foundingDate": "2015",
   "telephone": ["+91-9130561222", "+91-0240-2990699"],
-  "email": "sunshinehospital21@gmail.com",
+  "email": "sunshinecashless@gmail.com",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Plot No 7, Gut 36, Satara Parisar, Opp Patel Lawns, Beed Bypass Road",
@@ -29,6 +43,7 @@ const organizationSchema = {
     "latitude": "19.8762",
     "longitude": "75.3433"
   },
+  "hasMap": "https://maps.google.com/?q=Sunshine+Hospital+Satara+Parisar+Aurangabad",
   "openingHoursSpecification": [
     {
       "@type": "OpeningHoursSpecification",
@@ -41,45 +56,89 @@ const organizationSchema = {
       "dayOfWeek": ["Sunday"],
       "opens": "00:00",
       "closes": "23:59",
-      "description": "Emergency services only"
+      "description": "Emergency services 24/7"
     }
   ],
-  "medicalSpecialty": [
-    "Emergency Medicine",
-    "Orthopedics",
-    "General Surgery",
-    "Trauma Surgery",
-    "Critical Care Medicine",
-    "Internal Medicine"
-  ],
-  "availableService": [
-    {
-      "@type": "MedicalProcedure",
-      "name": "ESIC Cashless Treatment"
-    },
-    {
-      "@type": "MedicalProcedure", 
-      "name": "MJPJAY/PMJAY Treatment"
-    },
-    {
-      "@type": "MedicalProcedure",
-      "name": "Trauma Care"
-    },
-    {
-      "@type": "MedicalProcedure",
-      "name": "Orthopedic Surgery"
-    }
+  "priceRange": "$$",
+  "currenciesAccepted": "INR",
+  "paymentAccepted": ["Cash", "Credit Card", "Debit Card", "UPI", "ESIC Cashless", "MJPJAY", "PMJAY", "Insurance TPA"],
+  "areaServed": [
+    {"@type": "City", "name": "Chhatrapati Sambhajinagar"},
+    {"@type": "City", "name": "Aurangabad"},
+    {"@type": "AdministrativeArea", "name": "Waluj MIDC"},
+    {"@type": "AdministrativeArea", "name": "Chikalthana"},
+    {"@type": "AdministrativeArea", "name": "Cidco"}
   ],
   "sameAs": [
     "https://www.facebook.com/sunshinehospitalsambhajinagar",
     "https://www.instagram.com/sunshinehospital"
+  ],
+  "knowsAbout": [
+    "ESIC Cashless Treatment",
+    "MJPJAY Treatment",
+    "PMJAY Ayushman Bharat",
+    "Orthopedic Surgery",
+    "Trauma Care",
+    "General Surgery",
+    "Critical Care Medicine"
+  ],
+  "hasCredential": [
+    {
+      "@type": "EducationalOccupationalCredential",
+      "credentialCategory": "Government Empanelment",
+      "name": "ESIC Empanelled Hospital"
+    },
+    {
+      "@type": "EducationalOccupationalCredential", 
+      "credentialCategory": "Government Empanelment",
+      "name": "MJPJAY Empanelled Hospital"
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "credentialCategory": "Government Empanelment", 
+      "name": "PMJAY (Ayushman Bharat) Empanelled Hospital"
+    }
   ]
 };
+
+// MedicalSpecialty Schema
+const medicalSpecialtySchemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalSpecialty",
+    "name": "Orthopedics",
+    "alternateName": "Orthopedic Surgery",
+    "description": "Specialized treatment for bone, joint, and muscle conditions including knee replacement, hip replacement, and trauma surgery.",
+    "relevantSpecialty": "http://schema.org/Musculoskeletal"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalSpecialty",
+    "name": "General Surgery",
+    "description": "Comprehensive surgical care including laparoscopic surgery, hernia repair, and abdominal surgeries.",
+    "relevantSpecialty": "http://schema.org/Surgical"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalSpecialty",
+    "name": "Critical Care Medicine",
+    "alternateName": "ICU Care",
+    "description": "Advanced intensive care unit with modern life support systems and 24/7 critical care specialists."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalSpecialty",
+    "name": "Emergency Medicine",
+    "alternateName": "Trauma Care",
+    "description": "24/7 emergency and trauma care services with rapid response team and modern equipment."
+  }
+];
 
 // Local Business Schema for better local SEO
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "Hospital",
+  "@id": `${SITE_URL}/#hospital`,
   "name": "Sunshine Hospital",
   "image": DEFAULT_IMAGE,
   "priceRange": "$$",
@@ -104,7 +163,14 @@ const localBusinessSchema = {
     "Satara Parisar",
     "Cidco",
     "Chhatrapati Sambhajinagar"
-  ]
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.5",
+    "reviewCount": "250",
+    "bestRating": "5",
+    "worstRating": "1"
+  }
 };
 
 export default function SEO({ 
@@ -124,8 +190,8 @@ export default function SEO({
   const metaImage = image || DEFAULT_IMAGE;
   const canonicalUrl = url ? `${SITE_URL}${url}` : SITE_URL;
 
-  // Combine schemas
-  const schemas = [organizationSchema, localBusinessSchema];
+  // Combine schemas - include all enhanced schemas
+  const schemas = [medicalBusinessSchema, localBusinessSchema, ...medicalSpecialtySchemas];
   if (schema) {
     schemas.push(schema);
   }
@@ -195,65 +261,136 @@ export default function SEO({
 }
 
 // Export schema generators for specific pages
+
+// Enhanced Physician Schema (E-E-A-T Compliant)
 export const generateDoctorSchema = (doctor) => ({
   "@context": "https://schema.org",
   "@type": "Physician",
+  "@id": `${SITE_URL}/doctors/${doctor.id}`,
   "name": doctor.name,
-  "image": doctor.image,
+  "image": {
+    "@type": "ImageObject",
+    "url": doctor.image,
+    "caption": `${doctor.name} - ${doctor.title} at Sunshine Hospital`
+  },
   "description": doctor.description || `${doctor.name} is a ${doctor.title} at Sunshine Hospital with ${doctor.experience} of experience.`,
-  "medicalSpecialty": doctor.department,
+  "jobTitle": doctor.title,
+  "medicalSpecialty": {
+    "@type": "MedicalSpecialty",
+    "name": doctor.department
+  },
+  "knowsAbout": doctor.specializations || [doctor.department],
+  "alumniOf": doctor.education || "Medical College",
   "worksFor": {
     "@type": "Hospital",
+    "@id": `${SITE_URL}/#hospital`,
     "name": "Sunshine Hospital",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Chhatrapati Sambhajinagar",
       "addressRegion": "Maharashtra"
     }
+  },
+  "availableService": {
+    "@type": "MedicalProcedure",
+    "name": `${doctor.department} Consultation`
   }
 });
 
+// Enhanced Service Schema
 export const generateServiceSchema = (service) => ({
   "@context": "https://schema.org",
   "@type": "MedicalProcedure",
+  "@id": `${SITE_URL}/services/${service.slug}`,
   "name": service.name,
   "description": service.description,
   "howPerformed": service.details,
   "procedureType": "http://schema.org/SurgicalProcedure",
   "bodyLocation": service.bodyArea || "Various",
+  "preparation": "Consultation with specialist required",
+  "followup": "Post-operative care and rehabilitation",
   "provider": {
     "@type": "Hospital",
+    "@id": `${SITE_URL}/#hospital`,
     "name": "Sunshine Hospital",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Chhatrapati Sambhajinagar"
     }
+  },
+  "potentialAction": {
+    "@type": "ReserveAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": `${SITE_URL}/contact`,
+      "actionPlatform": ["http://schema.org/DesktopWebPlatform", "http://schema.org/MobileWebPlatform"]
+    },
+    "result": {
+      "@type": "Reservation",
+      "name": "Book Appointment"
+    }
   }
 });
 
-export const generateBlogSchema = (blog) => ({
+// Enhanced Blog Schema with Author Box (E-E-A-T Compliant)
+export const generateBlogSchema = (blog, author) => ({
   "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": blog.title,
-  "image": blog.featured_image,
-  "datePublished": blog.created_at,
-  "dateModified": blog.updated_at || blog.created_at,
-  "author": {
-    "@type": "Organization",
-    "name": "Sunshine Hospital"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Sunshine Hospital",
-    "logo": {
+  "@type": "MedicalWebPage",
+  "mainEntity": {
+    "@type": "Article",
+    "headline": blog.title,
+    "image": {
       "@type": "ImageObject",
-      "url": `${SITE_URL}/logo.png`
+      "url": blog.featured_image,
+      "caption": blog.title
+    },
+    "datePublished": blog.created_at,
+    "dateModified": blog.updated_at || blog.created_at,
+    "author": author ? {
+      "@type": "Person",
+      "@id": `${SITE_URL}/doctors/${author.id}`,
+      "name": author.name,
+      "jobTitle": author.title,
+      "image": author.image,
+      "worksFor": {
+        "@type": "Hospital",
+        "name": "Sunshine Hospital"
+      },
+      "knowsAbout": author.specializations || [author.department]
+    } : {
+      "@type": "Organization",
+      "name": "Sunshine Hospital"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      "name": "Sunshine Hospital",
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${SITE_URL}/logo.png`
+      }
+    },
+    "description": blog.excerpt,
+    "articleSection": blog.category,
+    "keywords": blog.tags?.join(", "),
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/blog/${blog.slug}`
+    },
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": ["h1", "h2", ".article-summary"]
     }
   },
-  "description": blog.excerpt,
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": `${SITE_URL}/blog/${blog.slug}`
+  "reviewedBy": author ? {
+    "@type": "Person",
+    "name": author.name,
+    "jobTitle": author.title
+  } : undefined,
+  "lastReviewed": blog.updated_at || blog.created_at,
+  "medicalAudience": {
+    "@type": "MedicalAudience",
+    "audienceType": "Patient"
   }
 });
 

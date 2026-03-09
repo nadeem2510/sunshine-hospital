@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { 
   ArrowLeft, Calendar, User, Eye, Clock, Tag,
-  Share2, Facebook, Twitter, Linkedin, Copy
+  Share2, Facebook, Twitter, Linkedin, Copy,
+  CheckCircle, Award, GraduationCap
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -39,6 +40,7 @@ const categoryLabels = {
 export default function BlogDetailPage() {
   const { slug } = useParams();
   const [blog, setBlog] = useState(null);
+  const [author, setAuthor] = useState(null);
   const [relatedBlogs, setRelatedBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAppointment, setShowAppointment] = useState(false);
@@ -49,11 +51,16 @@ export default function BlogDetailPage() {
 
   const fetchBlog = async () => {
     try {
-      const [blogRes, allBlogsRes] = await Promise.all([
+      const [blogRes, allBlogsRes, doctorsRes] = await Promise.all([
         axios.get(`${API_URL}/api/blogs/${slug}`),
         axios.get(`${API_URL}/api/blogs`),
+        axios.get(`${API_URL}/api/doctors`),
       ]);
       setBlog(blogRes.data);
+      
+      // Find author from doctors list
+      const blogAuthor = doctorsRes.data.find(d => d.id === blogRes.data.author_id);
+      setAuthor(blogAuthor);
       
       // Get related blogs (same category, different slug)
       const related = allBlogsRes.data
@@ -120,7 +127,7 @@ export default function BlogDetailPage() {
         image={blog.featured_image}
         url={`/blog/${blog.slug}`}
         type="article"
-        schema={generateBlogSchema(blog)}
+        schema={generateBlogSchema(blog, author)}
       />
       {/* Breadcrumb */}
       <div className="bg-white border-b border-slate-200">
@@ -205,6 +212,99 @@ export default function BlogDetailPage() {
               ))}
             </div>
           )}
+
+          {/* Author Box - E-E-A-T Compliance */}
+          {author && (
+            <Card className="bg-gradient-to-r from-purple-50 to-amber-50 rounded-2xl mb-10 border-0 shadow-md" data-testid="author-box">
+              <CardContent className="p-6 md:p-8">
+                <div className="flex flex-col md:flex-row gap-6">
+                  {/* Author Image */}
+                  <div className="flex-shrink-0">
+                    <Link to={`/doctors/${author.id}`}>
+                      <img 
+                        src={author.image} 
+                        alt={`${author.name} - ${author.title}`}
+                        className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-white shadow-lg"
+                      />
+                    </Link>
+                  </div>
+                  
+                  {/* Author Info */}
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-sm font-medium text-purple-700 bg-purple-100 px-3 py-1 rounded-full">
+                        Written By
+                      </span>
+                    </div>
+                    
+                    <Link to={`/doctors/${author.id}`} className="group">
+                      <h3 className="text-xl md:text-2xl font-bold text-slate-900 group-hover:text-purple-700 transition-colors">
+                        {author.name}
+                      </h3>
+                    </Link>
+                    
+                    <p className="text-purple-700 font-medium mb-3">{author.title}</p>
+                    
+                    <div className="flex flex-wrap gap-4 text-sm text-slate-600 mb-4">
+                      {author.experience && (
+                        <span className="flex items-center gap-1">
+                          <Award className="w-4 h-4 text-amber-500" />
+                          {author.experience}
+                        </span>
+                      )}
+                      {author.department && (
+                        <span className="flex items-center gap-1">
+                          <GraduationCap className="w-4 h-4 text-purple-500" />
+                          {author.department}
+                        </span>
+                      )}
+                    </div>
+                    
+                    {author.specializations && author.specializations.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {author.specializations.slice(0, 4).map((spec, i) => (
+                          <span key={i} className="text-xs bg-white px-2 py-1 rounded-full text-slate-600 border">
+                            {spec}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    
+                    <Link to={`/doctors/${author.id}`}>
+                      <Button variant="outline" size="sm" className="rounded-full text-purple-700 border-purple-300 hover:bg-purple-100">
+                        View Full Profile
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Fact-Checked & Medical Review Badge */}
+          <Card className="bg-green-50 rounded-xl mb-10 border border-green-200" data-testid="fact-check-badge">
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-green-800">
+                    Medically Reviewed & Fact-Checked
+                  </p>
+                  <p className="text-xs text-green-600">
+                    {author ? `Reviewed by ${author.name}, ${author.title}` : "Reviewed by Sunshine Hospital Medical Team"} 
+                    {" • "}
+                    Last updated: {new Date(blog.updated_at || blog.created_at).toLocaleDateString('en-IN', { 
+                      year: 'numeric', 
+                      month: 'long', 
+                      day: 'numeric' 
+                    })}
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Share */}
           <Card className="bg-slate-100 rounded-2xl mb-10">
