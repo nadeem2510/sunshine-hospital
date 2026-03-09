@@ -43,7 +43,7 @@ const medicalBusinessSchema = {
     "latitude": "19.8762",
     "longitude": "75.3433"
   },
-  "hasMap": "https://maps.google.com/?q=Sunshine+Hospital+Satara+Parisar+Aurangabad",
+  "hasMap": "https://maps.app.goo.gl/SvNZ93US42FUhZ166",
   "openingHoursSpecification": [
     {
       "@type": "OpeningHoursSpecification",

@@ -34,7 +34,7 @@ const contactInfo = [
       "Opp Patel Lawns, Beed Bypass Road",
       "Chh. Sambhajinagar - 431001"
     ],
-    action: "https://maps.google.com/?q=Sunshine+Hospital+Satara+Parisar+Aurangabad",
+    action: "https://maps.app.goo.gl/SvNZ93US42FUhZ166",
   },
   {
     icon: Clock,
@@ -250,7 +250,7 @@ export default function ContactPage() {
               <Card className="bg-white rounded-2xl shadow-lg overflow-hidden">
                 <div className="h-[400px]">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3752.0!2d75.35!3d19.87!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sSatara%20Parisar%2C%20Chhatrapati%20Sambhajinagar!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3752.227!2d75.3433!3d19.8762!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdba2f5e45a7c97%3A0x2c11b9d6b9e8c0d5!2sSunshine%20Hospital!5e0!3m2!1sen!2sin!4v1709913600000!5m2!1sen!2sin"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
@@ -259,6 +259,18 @@ export default function ContactPage() {
                     referrerPolicy="no-referrer-when-downgrade"
                     title="Sunshine Hospital Location"
                   />
+                </div>
+                {/* View on Google Maps Button */}
+                <div className="p-4 bg-slate-50 border-t">
+                  <a 
+                    href="https://maps.app.goo.gl/SvNZ93US42FUhZ166"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 text-purple-700 font-semibold hover:text-purple-800 transition-colors"
+                  >
+                    <MapPin className="w-5 h-5" />
+                    View on Google Maps
+                  </a>
                 </div>
               </Card>
               
