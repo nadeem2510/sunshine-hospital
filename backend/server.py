@@ -699,14 +699,14 @@ async def create_contact(input: ContactCreate, background_tasks: BackgroundTasks
 async def get_blog_categories():
     """Return list of blog categories"""
     return [
-        {"id": "general_health", "name": "General Health"},
-        {"id": "orthopedics", "name": "Orthopedics"},
-        {"id": "cardiology", "name": "Cardiology"},
-        {"id": "surgery", "name": "Surgery"},
-        {"id": "nutrition", "name": "Nutrition"},
-        {"id": "mental_health", "name": "Mental Health"},
-        {"id": "womens_health", "name": "Women's Health"},
-        {"id": "esic_info", "name": "ESIC Information"},
+        {"value": "general_health", "label": "General Health"},
+        {"value": "orthopedics", "label": "Orthopedics"},
+        {"value": "cardiology", "label": "Cardiology"},
+        {"value": "surgery", "label": "Surgery"},
+        {"value": "nutrition", "label": "Nutrition"},
+        {"value": "mental_health", "label": "Mental Health"},
+        {"value": "womens_health", "label": "Women's Health"},
+        {"value": "esic_info", "label": "ESIC Information"},
     ]
 
 @api_router.get("/blogs")
