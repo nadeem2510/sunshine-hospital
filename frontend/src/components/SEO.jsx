@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 
 const SITE_NAME = "Sunshine Hospital";
 const SITE_URL = "https://www.sunshinehospital.org";
-const DEFAULT_IMAGE = "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/29y24j9j_Hospital%20Building%20Exterior.png";
+const DEFAULT_IMAGE = "https://www.sunshinehospital.org/logo.png";
 
 // Enhanced MedicalBusiness Schema (E-E-A-T Compliant)
 const medicalBusinessSchema = {
@@ -451,7 +451,7 @@ export const generateHubSchema = (hubData) => {
       "@type": "Hospital",
       "@id": `${SITE_URL}/#hospital`,
       "name": "Sunshine Hospital",
-      "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/29y24j9j_Hospital%20Building%20Exterior.png",
+      "image": "https://www.sunshinehospital.org/logo.png",
       "telephone": "+91-9130561222",
       "address": {
         "@type": "PostalAddress",
