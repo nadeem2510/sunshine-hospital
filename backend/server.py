@@ -387,7 +387,7 @@ DOCTORS = [
         "qualification": "MBBS, MD (Medicine)",
         "experience": "15+ Years",
         "specializations": ["Internal Medicine", "Diabetes Management", "Hypertension", "Fever & Infections"],
-        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/ffi1eteu_Dr%20Nadim%20Shaikh.png",
+        "image": "/images/doctors/dr-nadeem-shaikh.png",
         "schedule": {
             "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             "timing": "10:00 AM - 6:00 PM"
@@ -402,7 +402,7 @@ DOCTORS = [
         "qualification": "MBBS, MS, DNB (Orthopedics)",
         "experience": "12+ Years",
         "specializations": ["Joint Replacement", "Spine Surgery", "Trauma Surgery", "Arthroscopy", "ACL Reconstruction"],
-        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/e558rx4q_Dr%20Gajanan%20Deshmukh.png",
+        "image": "/images/doctors/dr-gajanan-deshmukh.png",
         "schedule": {
             "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             "timing": "10:00 AM - 5:00 PM"
@@ -417,7 +417,7 @@ DOCTORS = [
         "qualification": "MBBS, MS (General Surgery)",
         "experience": "10+ Years",
         "specializations": ["Laparoscopic Surgery", "Cancer Surgery", "Hernia Repair", "Gallbladder Surgery", "Piles Surgery"],
-        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/6gtcn8os_Dr%20Mubasheer%20Quazi.png",
+        "image": "/images/doctors/dr-mubasheer-qazi.png",
         "schedule": {
             "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             "timing": "10:00 AM - 5:00 PM"
@@ -432,7 +432,7 @@ DOCTORS = [
         "qualification": "MBBS, MD, DNB (Cardiology)",
         "experience": "10+ Years",
         "specializations": ["Interventional Cardiology", "Angioplasty", "Heart Disease Management", "Cardiac Catheterization"],
-        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/4t1c42vk_Dr%20Ajeya%20Ukadgaokar.png",
+        "image": "/images/doctors/dr-ajeya-ukadgaonkar.png",
         "schedule": {
             "days": ["Monday", "Wednesday", "Friday", "Saturday"],
             "timing": "11:00 AM - 4:00 PM"
@@ -447,7 +447,7 @@ DOCTORS = [
         "qualification": "MD, DM (Nephrology)",
         "experience": "8+ Years",
         "specializations": ["Kidney Disease", "Dialysis", "Kidney Transplant Care", "Hypertension"],
-        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/0cs6fo5g_Dr%20Rahul%20Ruikar.png",
+        "image": "/images/doctors/dr-rahul-ruikar.png",
         "schedule": {
             "days": ["Tuesday", "Thursday", "Saturday"],
             "timing": "11:00 AM - 3:00 PM"
@@ -462,7 +462,7 @@ DOCTORS = [
         "qualification": "MBBS, MD (Pulmonary Medicine)",
         "experience": "8+ Years",
         "specializations": ["Respiratory Diseases", "Asthma", "COPD", "Sleep Disorders", "Lung Infections"],
-        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/bzzoxaga_DR%20AAKASH%20GORE.jpeg",
+        "image": "/images/doctors/dr-aakash-gore.jpeg",
         "schedule": {
             "days": ["Monday", "Wednesday", "Friday"],
             "timing": "10:00 AM - 2:00 PM"
@@ -477,7 +477,7 @@ DOCTORS = [
         "qualification": "MBBS, MS (Obstetrics & Gynecology)",
         "experience": "10+ Years",
         "specializations": ["Obstetrics", "Gynecological Surgery", "High-Risk Pregnancy", "Infertility"],
-        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/n6y9kh4g_Dr%20Saleha%20Kausar.png",
+        "image": "/images/doctors/dr-saleha-kausar.png",
         "schedule": {
             "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             "timing": "10:00 AM - 5:00 PM"
@@ -492,7 +492,7 @@ DOCTORS = [
         "qualification": "MBBS, MD (Psychiatry)",
         "experience": "8+ Years",
         "specializations": ["Depression", "Anxiety", "Stress Management", "Addiction Treatment"],
-        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/rxhaft4d_Dr%20Rachna%20Pole.png",
+        "image": "/images/doctors/dr-rachna-pole.png",
         "schedule": {
             "days": ["Monday", "Wednesday", "Friday"],
             "timing": "11:00 AM - 3:00 PM"
@@ -516,7 +516,7 @@ SERVICES = [
             "Central Line & Arterial Line Management",
             "Dialysis Support"
         ],
-        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/uaeebm62_hospital%20reception%20view%202.jpeg",
+        "image": "/images/services/icu.jpeg",
         "icon": "HeartPulse"
     },
     {
@@ -532,7 +532,7 @@ SERVICES = [
             "Blood Bank Facility",
             "Ambulance Services"
         ],
-        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/ecs8c3fa_hospital%20front%20view.jpeg",
+        "image": "/images/services/trauma-center.jpeg",
         "icon": "Ambulance"
     },
     {
@@ -548,7 +548,7 @@ SERVICES = [
             "Cholecystectomy",
             "Cancer Surgery"
         ],
-        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/p9gfbhd5_hospital%20reception%20view.jpeg",
+        "image": "/images/services/general-surgery.jpeg",
         "icon": "Stethoscope"
     },
     {
@@ -564,7 +564,7 @@ SERVICES = [
             "Arthroscopic Surgery",
             "Spine Care"
         ],
-        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/jvlmpt6c_WAITING%20AREA%202.jpeg",
+        "image": "/images/services/orthopedics.jpeg",
         "icon": "Bone"
     },
     {
@@ -580,7 +580,7 @@ SERVICES = [
             "Respiratory Conditions",
             "Infectious Diseases"
         ],
-        "image": "https://customer-assets.emergentagent.com/job_esic-cashless-med/artifacts/uaeebm62_hospital%20reception%20view%202.jpeg",
+        "image": "/images/services/general-medicine.jpeg",
         "icon": "Activity"
     }
 ]
