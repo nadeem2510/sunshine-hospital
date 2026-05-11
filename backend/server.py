@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, APIRouter, HTTPException, Depends, Header, BackgroundTasks
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.responses import RedirectResponse
@@ -26,8 +27,33 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
+
+# Startup seeding
+async def seed_initial_data():
+    """Seed initial data into MongoDB if collections are empty"""
+    try:
+        if await db.doctors.count_documents({}) == 0:
+            await db.doctors.insert_many(DOCTORS)
+            logger.info(f"Seeded {len(DOCTORS)} doctors into MongoDB")
+        if await db.services.count_documents({}) == 0:
+            await db.services.insert_many(SERVICES)
+            logger.info(f"Seeded {len(SERVICES)} services into MongoDB")
+        if await db.blogs.count_documents({}) == 0:
+            now = datetime.now(timezone.utc).isoformat()
+            sample_docs = [{**b, 'created_at': b.get('created_at', now), 'updated_at': now} for b in SAMPLE_BLOGS]
+            await db.blogs.insert_many(sample_docs)
+            logger.info(f"Seeded {len(SAMPLE_BLOGS)} sample blogs into MongoDB")
+    except Exception as e:
+        logger.error(f"Error seeding data: {e}")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await seed_initial_data()
+    yield
+    client.close()
+
 # Create the main app without a prefix
-app = FastAPI(title="Sunshine Hospital API", version="1.0.0")
+app = FastAPI(title="Sunshine Hospital API", version="1.0.0", lifespan=lifespan)
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
@@ -617,25 +643,33 @@ async def get_hospital_info():
 # Doctors
 @api_router.get("/doctors")
 async def get_doctors():
-    return DOCTORS
+    db_doctors = await db.doctors.find({}, {"_id": 0}).to_list(100)
+    return db_doctors if db_doctors else DOCTORS
 
 @api_router.get("/doctors/{doctor_id}")
 async def get_doctor(doctor_id: str):
-    for doctor in DOCTORS:
-        if doctor["id"] == doctor_id:
-            return doctor
+    doctor = await db.doctors.find_one({"id": doctor_id}, {"_id": 0})
+    if doctor:
+        return doctor
+    for d in DOCTORS:
+        if d["id"] == doctor_id:
+            return d
     raise HTTPException(status_code=404, detail="Doctor not found")
 
 # Services
 @api_router.get("/services")
 async def get_services():
-    return SERVICES
+    db_services = await db.services.find({}, {"_id": 0}).to_list(100)
+    return db_services if db_services else SERVICES
 
 @api_router.get("/services/{service_slug}")
 async def get_service(service_slug: str):
-    for service in SERVICES:
-        if service["slug"] == service_slug:
-            return service
+    service = await db.services.find_one({"slug": service_slug}, {"_id": 0})
+    if service:
+        return service
+    for s in SERVICES:
+        if s["slug"] == service_slug:
+            return s
     raise HTTPException(status_code=404, detail="Service not found")
 
 # Appointments
@@ -974,6 +1008,4 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    client.close()
+# DB shutdown handled by lifespan context manager
