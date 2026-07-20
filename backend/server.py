@@ -905,10 +905,15 @@ async def get_sitemap():
   </url>\n'''
     
     # Add blog posts
-    blogs = await db.blogs.find({"is_published": True}, {"_id": 0, "slug": 1}).to_list(100)
+    blogs = await db.blogs.find({"is_published": True}, {"_id": 0, "slug": 1, "created_at": 1}).to_list(200)
     for blog in blogs:
+        lastmod = ""
+        created = blog.get("created_at")
+        if created:
+            date_part = created[:10] if isinstance(created, str) else created.strftime("%Y-%m-%d")
+            lastmod = f"\n    <lastmod>{date_part}</lastmod>"
         sitemap_xml += f'''  <url>
-    <loc>{base_url}/blog/{blog["slug"]}</loc>
+    <loc>{base_url}/blog/{blog["slug"]}</loc>{lastmod}
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>\n'''

@@ -1,0 +1,39 @@
+{
+  "rewrites": [
+    {
+      "source": "/sitemap.xml",
+      "destination": "https://sunshine-hospital-backend.onrender.com/api/sitemap.xml"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/blogs/:slug*",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/gallery",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/our-doctors",
+      "destination": "/doctors",
+      "permanent": true
+    },
+    {
+      "source": "/contact-us",
+      "destination": "/contact",
+      "permanent": true
+    }
+  ]
+}
